@@ -30,6 +30,22 @@ export const options = {
             },
         })
     ],
+    callback: {
+        async jwt({token, user}){
+            if(user){
+                token.email = user.email,
+                token.id = user.id
+            }
+            return token;
+        },
+        async session({session, token}){
+            if(token){
+                session.user.email = token.email,
+                session.user.id = token.id
+            }
+            return session;
+        }
+    },
     pages: {
         signIn: "/login",
     }
