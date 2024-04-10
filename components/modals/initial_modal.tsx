@@ -2,7 +2,8 @@
 
 import * as z from "zod";
 import {zodResolver} from "@hookform/resolvers/zod"
-import axios from "axios";
+
+import {createServer} from "@/app/api/ServerApi";
 
 import {Dialog,DialogContent,DialogDescription,
         DialogFooter,DialogHeader,DialogTitle} 
@@ -25,9 +26,9 @@ const formSchema = z.object({
     })
 })
 
-const router = useRouter();
-
 export const InitialModal = () =>{
+    const router = useRouter();
+
     const [isMounted,setIsMounted] = useState(false);
     // Sử dụng để đảm bảo chỉ render khi đã mount component modal vào page
 
@@ -47,7 +48,9 @@ export const InitialModal = () =>{
 
     const onSubmit = async (values: z.infer<typeof formSchema>) =>{
         try {
-            await axios.post("localhost:4869/api/server",values);
+            console.log(values);
+            await createServer(values,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImxlaHV1ZHVjYW5oMUBnbWFpbC5jb20iLCJpYXQiOjE3MTI3Njg2MzcsImV4cCI6MTcxMjc3MjIzN30.KBSrnad7EbyESEMOcgPUAzeXw_s4FJTQhQLnNHWxnMI')
+            // Token truyen vao tu nick lehuuducanh1@gmail.com pass 12341234
             form.reset();
             router.refresh();
             window.location.reload();
@@ -89,6 +92,7 @@ export const InitialModal = () =>{
                                                     onChange = {field.onChange}
                                                 />
                                             </FormControl>
+                                            <FormMessage/>
                                         </FormItem>
                                     )}
                                 />
@@ -122,8 +126,8 @@ export const InitialModal = () =>{
                             Tạo mới
                         </Button>
                     </DialogFooter>
+
                     </form>
-                
                 </Form>
             </DialogContent>
         </Dialog>
