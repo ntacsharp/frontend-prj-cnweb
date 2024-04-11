@@ -1,13 +1,14 @@
 import GoogleProvider from "next-auth/providers/google";
+import CredentialsProvider from "next-auth/providers/credentials";
 
 export const options = {
     providers: [
         GoogleProvider({
-            profile(profile){
+            profile(profile) {
                 console.log("Profile Google: ", profile);
-                
+
                 let userRole = "Google User";
-                if(profile?.email == "test@gmail.com"){
+                if (profile?.email == "test@gmail.com") {
                     userRole = "admin";
                 }
                 return {
@@ -16,18 +17,20 @@ export const options = {
                     role: userRole
                 };
             },
-            clientId: process.env.GOOGLE_ID,
-            clientSecret: process.env.GOOGLE_SECRET
+            clientId: process.env.GOOGLE_ID != null ? process.env.GOOGLE_ID : "",
+            clientSecret: process.env.GOOGLE_SECRET != null ? process.env.GOOGLE_SECRET : ""
         }),
+        CredentialsProvider({
+            name: "credentials",
+            credentials: {
+            },
+            authorize: async (credentials) => {
+                console.log({credentials});
+                return credentials;
+            },
+        })
     ],
-    callback: {
-        async jwt({token, user}){
-            if(user) token.role = user.role
-            return token;
-        },
-        async session({session, token}){
-            if(session?.user) session.user.role = token.role
-            return session;
-        }
+    pages: {
+        signIn: "/login",
     }
 };
