@@ -12,10 +12,10 @@ from "@/components/ui/dialog"
 import { Form,FormControl,FormField,FormItem,FormLabel,FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FileUpload } from "../file-upload";
 import { useRouter } from "next/navigation";
+import { useModal } from "@/hook/use-modal";
 
 const formSchema = z.object({
     name: z.string().min(1,{
@@ -26,16 +26,11 @@ const formSchema = z.object({
     })
 })
 
-export const InitialModal = () =>{
+export const CreateServerModal = () =>{
     const router = useRouter();
+    const {isOpen, onClose, type} = useModal();
 
-    const [isMounted,setIsMounted] = useState(false);
-    // Sử dụng để đảm bảo chỉ render khi đã mount component modal vào page
-
-    useEffect(() =>{
-        setIsMounted(true);
-    },[])
-
+    const isModalOpen = isOpen && type === "createServer";
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -49,23 +44,19 @@ export const InitialModal = () =>{
     const onSubmit = async (values: z.infer<typeof formSchema>) =>{
         try {
             console.log(values);
-            await createServer(values,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOiIyIiwiaWF0IjoxNzEyNzg2MTk1LCJleHAiOjE3MTMwMDU3OTV9.G6fsrMzZS0DWb5HqgUZd-UbfSRZCrxB4jD2C135nDBQ')
-            
+            const response = await createServer(values,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOiIyIiwiaWF0IjoxNzEyNzg2MTk1LCJleHAiOjE3MTMwMDU3OTV9.G6fsrMzZS0DWb5HqgUZd-UbfSRZCrxB4jD2C135nDBQ')
+            const id = response.data.id;
             form.reset();
             router.refresh();
-            window.location.reload();
-        
+            router.push(`/servers/${id}`);
         }
         catch (error) {
             console.log(error);
         }
     };
 
-    if(!isMounted) {
-        return null;
-    }
     return (
-        <Dialog open>
+        <Dialog open={isModalOpen} onOpenChange={()=>{form.reset();onClose();}}>
             <DialogContent className="bg-white text-black overflow-hidden">
                 <DialogHeader className="pt-8 px-6">
                    <DialogTitle className="text-center text-2xl font-bold">

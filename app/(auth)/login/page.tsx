@@ -18,8 +18,8 @@ const Login = () => {
         login(email,password)
             .then(response => {
                 const token = response.data.token;
-                localStorage.setItem('token', token);
-                router.push('/');
+                sessionStorage.setItem('token', token);
+                router.push(`/servers/1`);
             })
             .catch(error => {
                 console.error('Login failed:', error);
