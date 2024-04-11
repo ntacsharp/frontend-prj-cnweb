@@ -13,3 +13,17 @@ export const createServer = (values, token) => {
     console.log(payload);
     return apiClient.post(`/api/server`, payload,{ headers: headers });
 };
+
+export const listAllServers = (token) =>{
+    const headers = {
+        Authorization: `Bearer ${token}`,
+    };
+    return apiClient.get(`/api/server/all`,{headers: headers});
+}
+
+export const getServerById =(id,token) =>{
+    const headers = {
+        Authorization: `Bearer ${token}`,
+    };
+    return apiClient.get(`/api/server/${id}`,{headers: headers})
+}
