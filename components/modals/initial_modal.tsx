@@ -25,9 +25,10 @@ const formSchema = z.object({
     })
 })
 
-const router = useRouter();
+
 
 export const InitialModal = () =>{
+    const router = useRouter();
     const [isMounted,setIsMounted] = useState(false);
     // Sử dụng để đảm bảo chỉ render khi đã mount component modal vào page
 
@@ -47,7 +48,8 @@ export const InitialModal = () =>{
 
     const onSubmit = async (values: z.infer<typeof formSchema>) =>{
         try {
-            await axios.post("localhost:4869/api/server",values);
+            console.log(values);
+            await axios.post("http://localhost:4869/api/server",values);
             form.reset();
             router.refresh();
             window.location.reload();
