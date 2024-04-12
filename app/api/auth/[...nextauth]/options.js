@@ -1,20 +1,29 @@
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
+import {login} from "@/app/api/UserApi"
+
+async function loginAsync(email, password) {
+        login(email,password)
+        .then(response => {
+            const token = response.data.token;
+            sessionStorage.setItem('token', token);
+            router.push(`/servers/1`);
+            console.log(token)
+        })
+        .catch(error => {
+            console.error('Login failed:', error);
+        });
+}
 
 export const options = {
     providers: [
         GoogleProvider({
             profile(profile) {
                 console.log("Profile Google: ", profile);
-
-                let userRole = "Google User";
-                if (profile?.email == "test@gmail.com") {
-                    userRole = "admin";
-                }
                 return {
                     ...profile,
                     id: profile.sub,
-                    role: userRole
+                    role: "User"
                 };
             },
             clientId: process.env.GOOGLE_ID != null ? process.env.GOOGLE_ID : "",
@@ -25,7 +34,8 @@ export const options = {
             credentials: {
             },
             authorize: async (credentials) => {
-                console.log({credentials});
+                // console.log({credentials});
+                await loginAsync(credentials.email, credentials.password);
                 return credentials;
             },
         })

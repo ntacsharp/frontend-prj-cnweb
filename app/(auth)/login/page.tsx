@@ -3,7 +3,7 @@
 import React, { FormEvent, useState } from 'react';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
-import {login} from "@/app/api/UserApi"
+// import {login} from "@/app/api/UserApi"
 import { useRouter } from 'next/navigation';
 
 const Login = () => {
@@ -13,17 +13,11 @@ const Login = () => {
 
     function handleSubmit(e: FormEvent) {
         e.preventDefault();
-       
-        
-        login(email,password)
-            .then(response => {
-                const token = response.data.token;
-                sessionStorage.setItem('token', token);
-                router.push(`/servers/1`);
-            })
-            .catch(error => {
-                console.error('Login failed:', error);
-            });
+        signIn("credentials", {
+            email: email,
+            password: password,
+            redirect: false
+        });
     }
 
     function handleSignInWithGoogle() {
