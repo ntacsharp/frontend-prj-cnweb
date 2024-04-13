@@ -27,3 +27,18 @@ export const getServerById =(id,token) =>{
     };
     return apiClient.get(`/api/server/${id}`,{headers: headers})
 }
+
+export const leaveServer = (serverId,token) =>{
+    const headers = {
+        Authorization: `Bearer ${token}`,
+    };
+    return apiClient.patch(`/api/server/${serverId}/leave`,{headers: headers})
+
+}
+
+export const deleteServer = (serverId, token) => {
+    const headers = {
+        Authorization: `Bearer ${token}`,
+    };
+    return apiClient.delete(`/api/server/${serverId}`,{headers: headers})
+}
