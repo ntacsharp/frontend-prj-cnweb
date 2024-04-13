@@ -41,3 +41,17 @@ export const joinServer = async (inviteCode, token) => {
     };
     return apiClient.patch(`/api/server/join/${inviteCode}`,{headers: headers});
 }
+
+export const updateServer = async (values, serverId, token) => {
+    const payload = {
+        imageUrl: values.imageUrl,
+        name: values.name
+
+    };
+    const headers = {
+        Authorization: `Bearer ${token}`,
+    };
+
+    console.log(payload);
+    return apiClient.patch(`/api/server/${serverId}`, payload,{ headers: headers });
+}
