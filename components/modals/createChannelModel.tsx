@@ -52,7 +52,7 @@ export const CreateChannelModal = () => {
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            const response = await createChannel(values,"jkfaf");
+            const response = await createChannel(values,"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOiIxIiwiaWF0IjoxNzEzMDE4NDk0LCJleHAiOjE3MTMwMjIwOTR9.S9VKBbPdMlrk0uhg7cYnf8Mvp7sQ9KsZjXOEm26EpSM");
             const id = response.data.id;
             form.reset();
             router.refresh();

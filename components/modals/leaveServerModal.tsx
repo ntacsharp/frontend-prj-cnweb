@@ -31,7 +31,7 @@ export const LeaveServerModal = () => {
     try {
         setIsLoading(true);
         // call api từ back end 
-        await leaveServer(server?.id,"token");
+        await leaveServer(server?.id,"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOiIxIiwiaWF0IjoxNzEzMDE4NDk0LCJleHAiOjE3MTMwMjIwOTR9.S9VKBbPdMlrk0uhg7cYnf8Mvp7sQ9KsZjXOEm26EpSM");
         onClose();
         router.refresh();
         router.push("/");

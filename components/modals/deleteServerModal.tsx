@@ -16,7 +16,7 @@ import { useModal } from "@/hook/use-modal";
 import { useRouter } from "next/navigation";
 import { deleteServer } from "@/app/api/ServerApi";
 
-export const LeaveServerModal = () => {
+export const DeleteServerModal = () => {
   const { isOpen, onClose, type, data } = useModal();
   const router = useRouter();
 
@@ -31,7 +31,7 @@ export const LeaveServerModal = () => {
     try {
         setIsLoading(true);
         // call api từ back end 
-        await deleteServer(server?.id,"token");
+        await deleteServer(server?.id,"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOiIxIiwiaWF0IjoxNzEzMDE4NDk0LCJleHAiOjE3MTMwMjIwOTR9.S9VKBbPdMlrk0uhg7cYnf8Mvp7sQ9KsZjXOEm26EpSM");
         onClose();
         router.refresh();
         router.push("/");
