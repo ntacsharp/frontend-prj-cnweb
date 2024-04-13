@@ -21,6 +21,7 @@ const InviteCodePage = async ({
     if(resp){
         return redirect(`/servers/${resp.data.id}`);
     }
+
     return (
         <div>
             xdd
