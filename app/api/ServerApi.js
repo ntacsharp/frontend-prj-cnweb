@@ -27,3 +27,17 @@ export const getServerById =(id,token) =>{
     };
     return apiClient.get(`/api/server/${id}`,{headers: headers})
 }
+
+export const generateNewLink = async (id, token) => {
+    const headers = {
+        Authorization: `Bearer ${token}`,
+    };
+    return apiClient.get(`/api/server/${id}/invite`,{headers: headers});
+}
+
+export const joinServer = async (inviteCode, token) => {
+    const headers = {
+        Authorization: `Bearer ${token}`,
+    };
+    return apiClient.patch(`/api/server/join/${inviteCode}`,{headers: headers});
+}
