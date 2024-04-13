@@ -10,7 +10,6 @@ import Image from "next/image";
 export const NavigationSidebar = async () => {
    
     const servers = await listAllServers('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOiIyIiwiaWF0IjoxNzEyNzg2MTk1LCJleHAiOjE3MTMwMDU3OTV9.G6fsrMzZS0DWb5HqgUZd-UbfSRZCrxB4jD2C135nDBQ')
-  
     return (
         <div className="space-y-4 flex flex-col items-center 
         h-full w-full text-primary dark:bg-[#1E1F22] py-3">
