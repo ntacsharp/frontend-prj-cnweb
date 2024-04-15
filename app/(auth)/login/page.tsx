@@ -4,7 +4,7 @@ import React, { FormEvent, useState } from 'react';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 // import {login} from "@/app/api/UserApi"
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 
 const Login = () => {
     const [email, setEmail] = useState("");

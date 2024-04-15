@@ -5,7 +5,7 @@ const ServerIdLayout = async ({children,params,}:{children:React.ReactNode,param
 
     // Khi co authen voi id thi se xu li kiem tra sau
 
-    const server = await getServerById(params.serverId,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOiIyIiwiaWF0IjoxNzEyNzg2MTk1LCJleHAiOjE3MTMwMDU3OTV9.G6fsrMzZS0DWb5HqgUZd-UbfSRZCrxB4jD2C135nDBQ')
+    const server = await getServerById(params.serverId, process.env.token)
 
     return(
         <div className="h-full">

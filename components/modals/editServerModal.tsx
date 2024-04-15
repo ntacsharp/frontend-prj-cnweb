@@ -55,7 +55,7 @@ export const EditServerModal = () => {
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
             console.log(values);
-            const response = await updateServer(values, server?.id, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOiIyIiwiaWF0IjoxNzEyNzg2MTk1LCJleHAiOjE3MTMwMDU3OTV9.G6fsrMzZS0DWb5HqgUZd-UbfSRZCrxB4jD2C135nDBQ')
+            const response = await updateServer(values, server?.id, process.env.token)
             const id = response.data.id;
             form.reset();
             router.refresh();
@@ -78,9 +78,6 @@ export const EditServerModal = () => {
                     <DialogTitle className="text-center text-2xl font-bold">
                         Tuỳ chỉnh máy chủ của bạn
                     </DialogTitle>
-                    <DialogDescription className="text-center text-zinc-500">
-                        Tạo cho máy chủ của bạn một cái tên và ảnh. Bạn luôn có thể chỉnh sửa nó sau này
-                    </DialogDescription>
                 </DialogHeader>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)}

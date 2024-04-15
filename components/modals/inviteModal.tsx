@@ -43,7 +43,7 @@ export const InviteModal = () => {
         try {
             setIsLoading(true);
             //const resp = await axios.patch(`/api/servers/${server?.id}/invite-code`);
-            const resp = await generateNewLink(server?.id, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOiIyIiwiaWF0IjoxNzEyNzg2MTk1LCJleHAiOjE3MTMwMDU3OTV9.G6fsrMzZS0DWb5HqgUZd-UbfSRZCrxB4jD2C135nDBQ');
+            const resp = await generateNewLink(server?.id, process.env.token);
             onOpen("invite", { server: resp.data });
         } catch (error) {
             console.log(error);
@@ -59,9 +59,6 @@ export const InviteModal = () => {
                     <DialogTitle className="text-center text-2xl font-bold">
                         Tuỳ chỉnh máy chủ của bạn
                     </DialogTitle>
-                    <DialogDescription className="text-center text-zinc-500">
-                        Tạo cho máy chủ của bạn một cái tên và ảnh. Bạn luôn có thể chỉnh sửa nó sau này
-                    </DialogDescription>
                 </DialogHeader>
                 <div className="p-6">
                     <Label>
