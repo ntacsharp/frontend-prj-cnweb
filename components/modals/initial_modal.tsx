@@ -49,7 +49,7 @@ export const InitialModal = () =>{
     const onSubmit = async (values: z.infer<typeof formSchema>) =>{
         try {
             console.log(values);
-            await createServer(values,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOiIyIiwiaWF0IjoxNzEyNzg2MTk1LCJleHAiOjE3MTMwMDU3OTV9.G6fsrMzZS0DWb5HqgUZd-UbfSRZCrxB4jD2C135nDBQ')
+            await createServer(values, process.env.token)
             
             form.reset();
             router.refresh();

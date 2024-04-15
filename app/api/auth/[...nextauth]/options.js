@@ -1,14 +1,15 @@
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import {login} from "@/app/api/UserApi"
+import { redirect } from 'next/navigation';
 
 async function loginAsync(email, password) {
         login(email,password)
         .then(response => {
             const token = response.data.token;
-            sessionStorage.setItem('token', token);
-            router.push(`/servers/1`);
+            if (typeof window !== 'undefined') sessionStorage.setItem('token', token);
             console.log(token)
+            // redirect(`/servers/1`);
         })
         .catch(error => {
             console.error('Login failed:', error);

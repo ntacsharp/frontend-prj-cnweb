@@ -16,7 +16,7 @@ const InviteCodePage = async ({
         return redirect("/");
     }
 
-    const resp = await joinServer(params.inviteCode, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOiIyIiwiaWF0IjoxNzEyNzg2MTk1LCJleHAiOjE3MTMwMDU3OTV9.G6fsrMzZS0DWb5HqgUZd-UbfSRZCrxB4jD2C135nDBQ');
+    const resp = await joinServer(params.inviteCode, process.env.token);
 
     if(resp){
         return redirect(`/servers/${resp.data.id}`);
