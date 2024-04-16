@@ -20,6 +20,8 @@ import { useForm } from "react-hook-form";
 import { FileUpload } from "../file-upload";
 import { useRouter } from "next/navigation";
 import { useModal } from "@/hook/use-modal";
+import { usePathname } from 'next/navigation';
+
 
 const allowedTypes = ["TEXT", "AUDIO", "VIDEO"];
 
@@ -37,6 +39,8 @@ const formSchema = z.object({
 
 export const CreateChannelModal = () => {
     const router = useRouter();
+    const pathname = usePathname();
+    
     const { isOpen, onClose, type } = useModal();
 
     const isModalOpen = isOpen && type === "createChannel";
@@ -48,11 +52,16 @@ export const CreateChannelModal = () => {
         }
     })
 
+    const serverId = pathname.split("/")[2];
+
+
     const isLoading = form.formState.isSubmitting;
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            const response = await createChannel(values,"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOiIxIiwiaWF0IjoxNzEzMDE4NDk0LCJleHAiOjE3MTMwMjIwOTR9.S9VKBbPdMlrk0uhg7cYnf8Mvp7sQ9KsZjXOEm26EpSM");
+            console.log(values);
+            console.log(process.env.token);
+            const response = await createChannel(values,serverId,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOiIxIiwiaWF0IjoxNzEzMjYzNTc2LCJleHAiOjE3MTMyNjcxNzZ9.udo-x41hshYeiCxqd9iw8SQfGFIuIp5N7zWxT_k_Zvw');
             const id = response.data.id;
             form.reset();
             router.refresh();

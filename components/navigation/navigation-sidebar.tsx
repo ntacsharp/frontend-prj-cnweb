@@ -9,8 +9,7 @@ import Image from "next/image";
 
 export const NavigationSidebar = async () => {
    
-    const servers = await listAllServers('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOiIxIiwiaWF0IjoxNzEzMDE4NDk0LCJleHAiOjE3MTMwMjIwOTR9.S9VKBbPdMlrk0uhg7cYnf8Mvp7sQ9KsZjXOEm26EpSM')
-  
+    const servers = await listAllServers(process.env.token);
     return (
         <div className="space-y-4 flex flex-col items-center 
         h-full w-full text-primary dark:bg-[#1E1F22] py-3">

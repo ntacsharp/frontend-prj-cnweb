@@ -9,5 +9,5 @@ export const createChannel = (values, serverId ,token) => {
     const headers = {
         Authorization: `Bearer ${token}`,
     };
-    return apiClient.post(`/channel?serverId=${serverId}`, payload, {headers});
+    return apiClient.post(`/api/channel?serverId=${serverId}`, payload, {headers});
 }

@@ -21,7 +21,7 @@ const SetupPage = async () =>{
   return (
     <div>
       Create a server
-      <InitialModal/>
+      {/* <InitialModal/> */}
     </div>
   )
 }

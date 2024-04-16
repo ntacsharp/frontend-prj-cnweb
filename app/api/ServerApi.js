@@ -42,3 +42,30 @@ export const deleteServer = (serverId, token) => {
     };
     return apiClient.delete(`/api/server/${serverId}`,{headers: headers})
 }
+export const generateNewLink = async (id, token) => {
+    const headers = {
+        Authorization: `Bearer ${token}`,
+    };
+    return apiClient.patch(`/api/server/${id}/invite`,null,{headers});
+}
+
+export const joinServer = async (inviteCode, token) => {
+    const headers = {
+        Authorization: `Bearer ${token}`,
+    };
+    return apiClient.patch(`/api/server/join/${inviteCode}`,null,{headers: headers});
+}
+
+export const updateServer = async (values, serverId, token) => {
+    const payload = {
+        imageUrl: values.imageUrl,
+        name: values.name
+
+    };
+    const headers = {
+        Authorization: `Bearer ${token}`,
+    };
+
+    console.log(payload);
+    return apiClient.patch(`/api/server/${serverId}`, payload,{ headers: headers });
+}
