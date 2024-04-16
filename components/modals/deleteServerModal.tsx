@@ -20,18 +20,19 @@ export const DeleteServerModal = () => {
   const { isOpen, onClose, type, data } = useModal();
   const router = useRouter();
 
-  const isModalOpen = isOpen && type === "leaveServer";
+  const isModalOpen = isOpen && type === "deleteServer";
   const { server } = data;
 
   const [isLoading, setIsLoading] = useState(false);
 
 
 
-  const onClick = async () =>{
+  const DeleteServer = async () =>{
     try {
+        console.log(server?.id);
         setIsLoading(true);
         // call api từ back end 
-        await deleteServer(server?.id,"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOiIxIiwiaWF0IjoxNzEzMDE4NDk0LCJleHAiOjE3MTMwMjIwOTR9.S9VKBbPdMlrk0uhg7cYnf8Mvp7sQ9KsZjXOEm26EpSM");
+        await deleteServer(server?.id,"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOiIxIiwiaWF0IjoxNzEzMjYzNTc2LCJleHAiOjE3MTMyNjcxNzZ9.udo-x41hshYeiCxqd9iw8SQfGFIuIp5N7zWxT_k_Zvw");
         onClose();
         router.refresh();
         router.push("/");
@@ -67,8 +68,8 @@ export const DeleteServerModal = () => {
                 </Button>
                 <Button
                 disabled={isLoading}
-                onClick={() => {onClick}} 
-                variant="default"
+                onClick={DeleteServer} 
+                className="bg-indigo-400 text-white hover:bg-indigo-500 duration-100"
                 >
                     Xóa kênh
                 </Button>
