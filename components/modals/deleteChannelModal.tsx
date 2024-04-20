@@ -14,28 +14,27 @@ import {
 import { Button } from "@/components/ui/button";
 import { useModal } from "@/hook/use-modal";
 import { useRouter } from "next/navigation";
-import { deleteServer } from "@/app/api/ServerApi";
+import { deleteChannel } from "@/app/api/ChannelApi";
 
-export const DeleteServerModal = () => {
+export const DeleteChannelModal = () => {
   const { isOpen, onClose, type, data } = useModal();
   const router = useRouter();
 
-  const isModalOpen = isOpen && type === "deleteServer";
-  const { server } = data;
+  const isModalOpen = isOpen && type === "deleteChannel";
+  const { server,channel } = data;
 
   const [isLoading, setIsLoading] = useState(false);
 
 
 
-  const DeleteServer = async () =>{
+  const DeleteChannel = async () =>{
     try {
-        console.log(server?.id);
+        console.log(channel?.id);
         setIsLoading(true);
         // call api từ back end 
-        await deleteServer(server?.id,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOiIyIiwiaWF0IjoxNzEzNDk4NTIwLCJleHAiOjE3MTM3MTQ1MjB9.3Mkm6n9BMXJcJyWsHeX23JlBRu15eFHbk-BwUOmUa_w');
+        // await deleteChannel(server?.id,channel?id,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOiIyIiwiaWF0IjoxNzEzNDk4NTIwLCJleHAiOjE3MTM3MTQ1MjB9.3Mkm6n9BMXJcJyWsHeX23JlBRu15eFHbk-BwUOmUa_w');
         onClose();
         router.refresh();
-        router.push("/servers/1");
     }
     catch (error) {
         console.log(error);
@@ -55,7 +54,7 @@ export const DeleteServerModal = () => {
           <DialogDescription className="text-center text-zinc-500">
             Bạn có chắc chắn muốn xóa kênh này? 
             <br />
-            <span className="font-semibold text-indigo-500">{server?.name} sẽ bị xóa vĩnh viễn.</span>
+            <span className="font-semibold text-indigo-500">{channel?.name} sẽ bị xóa vĩnh viễn.</span>
          </DialogDescription>
         </DialogHeader>
         
@@ -68,7 +67,7 @@ export const DeleteServerModal = () => {
                 </Button>
                 <Button
                 disabled={isLoading}
-                onClick={DeleteServer} 
+                onClick={DeleteChannel} 
                 className="bg-indigo-400 text-white hover:bg-indigo-500 duration-100"
                 >
                     Xóa kênh

@@ -8,14 +8,13 @@ import { ModeToggle } from "../mode-toggle";
 import Image from "next/image";
 
 export const NavigationSidebar = async () => {
-   
     const servers = await listAllServers(process.env.token);
     return (
         <div className="space-y-4 flex flex-col items-center 
-        h-full w-full text-primary dark:bg-[#1E1F22] py-3">
+        h-full w-full text-primary dark:bg-[#1E1F22] py-3 bg-[#E3E5E8]">
             <NavigationAction/>
             <Separator className="h-[2px] bg-zinc-300 
-            dark:bg-zinc-700 rounded-md w-14 mx-auto"/>
+            dark:bg-zinc-700 rounded-md w-14 mx-auto "/>
             <ScrollArea className="flex-1 w-full">
                 {servers.data.map((server:any) => (
                     <div key={server.id}>

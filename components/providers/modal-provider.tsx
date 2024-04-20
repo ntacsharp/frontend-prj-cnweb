@@ -3,12 +3,13 @@
 import { CreateServerModal } from "../modals/createServerModal"
 import { useEffect,useState } from "react";
 import { DeleteServerModal} from "../modals/deleteServerModal";
-import { Delete } from "lucide-react";
-import { CreateChannelModal } from "../modals/createChannelModel";
+import { CreateChannelModal } from "../modals/createChannelModal";
 import { LeaveServerModal } from "../modals/leaveServerModal";
 import { InviteModal } from "../modals/inviteModal";
 import { EditServerModal } from "../modals/editServerModal";
 import { MembersModal } from "../modals/membersModal";
+import { DeleteChannelModal } from "../modals/deleteChannelModal";
+import { EditChannelModal } from "../modals/editChannelModal";
 
 export const ModalProvider = () =>{
     const [isMounted, setIsMounted] = useState(false);
@@ -26,10 +27,11 @@ export const ModalProvider = () =>{
             <CreateChannelModal/>
             <LeaveServerModal/>
             <DeleteServerModal/>
-
             <InviteModal/>
             <EditServerModal/>
             <MembersModal/>
+            <DeleteChannelModal/>
+            <EditChannelModal/>
         </div>
     )
 }
