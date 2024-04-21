@@ -1,11 +1,13 @@
 
+import { Channel } from "@/model/Channel";
 import { ChannelType } from "@/model/ChannelType";
 import { Server } from "@/model/Server";
-import { Channel } from "diagnostics_channel";
 import { create } from "zustand";
 
 export type ModalType = "createServer" | "invite" | "editServer" | "members" | "createChannel" | "leaveServer" | "deleteServer" | "deleteChannel" | "editChannel" | "messageFile" | "deleteMessage";
 
+
+// Data nhan vao cua modal
 interface ModalData {
   server?: Server;
   channel?: Channel;
@@ -13,6 +15,7 @@ interface ModalData {
   apiUrl?: string;
   query?: Record<string, any>;
 }
+
 
 interface ModalStore {
   type: ModalType | null;
