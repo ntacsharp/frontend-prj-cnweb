@@ -6,6 +6,7 @@ const nextConfig = {
             "utfs.io"
         ]
     },
+    reactStrictMode:true,
     env: {
       BASE_URL: process.env.NEXT_PUBLIC_TOKEN,
     },

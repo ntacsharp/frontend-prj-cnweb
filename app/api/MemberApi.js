@@ -20,3 +20,13 @@ export const deleteMember = async (ids, token) => {
     };
     return apiClient.delete(`/api/member/${ids.memberId}`, payload, {headers: headers});
 }
+
+export const getCurrentMember = async (serverId, token) => {
+    const headers = {
+        Authorization: `Bearer ${token}`,
+    };
+    return apiClient.get(`/api/member?serverId=${serverId}`, {headers: headers})
+    .then(response => {
+        return response.data;
+    });
+}
