@@ -17,17 +17,18 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useForm } from "react-hook-form";
-import { FileUpload } from "../file-upload";
 import { useRouter } from "next/navigation";
 import { useModal } from "@/hook/use-modal";
 import { usePathname } from 'next/navigation';
+import { useEffect } from "react";
+import { ChannelType } from "@/model/ChannelType";
 
 
 const allowedTypes = ["TEXT", "AUDIO", "VIDEO"];
 
 const formSchema = z.object({
     name: z.string().min(1, {
-        message: "Tên kenh là bắt buộc."
+        message: "Tên kênh là bắt buộc."
     }).refine(
         name => name !== 'general',
         { message: "Tên kênh không được phép là general" }
@@ -37,13 +38,16 @@ const formSchema = z.object({
     )
 });
 
-export const CreateChannelModal = () => {
+export const EditChannelModal = () => {
+
     const router = useRouter();
     const pathname = usePathname();
     
-    const { isOpen, onClose, type } = useModal();
+    const { isOpen, onClose, type ,data} = useModal();
+    const {server , channel} = data;
+  
+    const isModalOpen = isOpen && type === "editChannel";
 
-    const isModalOpen = isOpen && type === "createChannel";
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -54,15 +58,24 @@ export const CreateChannelModal = () => {
 
     const serverId = pathname.split("/")[2];
 
-
     const isLoading = form.formState.isSubmitting;
+
+    // Set gia tri channelType theo moi loai kenh khi them moi
+    useEffect(() => {
+        if (channel){
+            form.setValue("type",channel.type);
+            form.setValue("name",channel.name);
+        }
+        else{
+            form.setValue("type",ChannelType.TEXT)
+        }
+    },[channel,form])
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
             console.log(values);
-            console.log(process.env.token);
-            const response = await createChannel(values,serverId,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOiIxIiwiaWF0IjoxNzEzMjYzNTc2LCJleHAiOjE3MTMyNjcxNzZ9.udo-x41hshYeiCxqd9iw8SQfGFIuIp5N7zWxT_k_Zvw');
-            const id = response.data.id;
+
+            // const response = await editChannel(values,serverId, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOiIyIiwiaWF0IjoxNzEzNDk4NTIwLCJleHAiOjE3MTM3MTQ1MjB9.3Mkm6n9BMXJcJyWsHeX23JlBRu15eFHbk-BwUOmUa_w');
             form.reset();
             router.refresh();
             onClose();
@@ -77,7 +90,7 @@ export const CreateChannelModal = () => {
             <DialogContent className="bg-white text-black overflow-hidden">
                 <DialogHeader className="pt-8 px-6">
                     <DialogTitle className="text-center text-2xl font-bold">
-                        Tạo kênh mới
+                        Chỉnh sửa kênh
                     </DialogTitle>
                 </DialogHeader>
                 <Form {...form}>
@@ -111,7 +124,7 @@ export const CreateChannelModal = () => {
                                 name="type"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Loại kệnh</FormLabel>
+                                        <FormLabel>Loại kênh</FormLabel>
                                         <Select
                                             disabled={isLoading}
                                             onValueChange={field.onChange}
@@ -142,7 +155,7 @@ export const CreateChannelModal = () => {
                         </div>
                         <DialogFooter className="bg-gray-100 px-6 py-4" >
                             <Button disabled={isLoading} className="bg-blue-600 text-white hover:bg-indigo-500/90">
-                                Tạo mới
+                                Lưu
                             </Button>
                         </DialogFooter>
 

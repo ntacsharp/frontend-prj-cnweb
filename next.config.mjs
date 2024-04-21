@@ -5,7 +5,11 @@ const nextConfig = {
             "uploadthing.com",
             "utfs.io"
         ]
-    }
+    },
+    reactStrictMode: true,
+    env: {
+      BASE_URL: process.env.NEXT_PUBLIC_TOKEN,
+    },
 };
 
 export default nextConfig;
