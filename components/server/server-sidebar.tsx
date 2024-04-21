@@ -1,3 +1,4 @@
+"use client"
 import { getServerById } from "@/app/api/ServerApi";
 
 import ServerHeader from "./server-header";
@@ -13,7 +14,7 @@ import { Member } from "@/model/Member";
 
 const ServerSidebar = async ({ serverId }: { serverId: string }) => {
 
-    const response = await getServerById(serverId, process.env.token)
+    const response = await getServerById(serverId, process.env.NEXT_PUBLIC_TOKEN)
     // myId cho nay loi logic do chua co pi getprofile cho user
     const server = response?.data
     const myId = server?.profileId;

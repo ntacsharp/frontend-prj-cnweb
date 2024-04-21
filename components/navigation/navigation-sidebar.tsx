@@ -1,27 +1,34 @@
+"use client"
 import { listAllServers } from "@/app/api/ServerApi";
-import { useState, useEffect } from "react";
-import NavigationAction from "./navigation-action";
 import { Separator } from "../ui/separator";
 import { ScrollArea } from "../ui/scroll-area";
 import { NavigationItem } from "./navigation-item";
 import { ModeToggle } from "../mode-toggle";
 import Image from "next/image";
+import AddServerAction from "./add-server-action";
+import DirectMessageAction from "./direct-message-action";
 
 export const NavigationSidebar = async () => {
-    const servers = await listAllServers(process.env.token);
+    const servers = await listAllServers('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOiIyIiwiaWF0IjoxNzEzNDk4NTIwLCJleHAiOjE3MTM3MTQ1MjB9.3Mkm6n9BMXJcJyWsHeX23JlBRu15eFHbk-BwUOmUa_w');
     return (
         <div className="space-y-4 flex flex-col items-center 
         h-full w-full text-primary dark:bg-[#1E1F22] py-3 bg-[#E3E5E8]">
-            <NavigationAction/>
+
+            <DirectMessageAction/>
             <Separator className="h-[2px] bg-zinc-300 
-            dark:bg-zinc-700 rounded-md w-14 mx-auto "/>
+                         dark:bg-zinc-700 rounded-md w-14 mx-auto"/>
+
             <ScrollArea className="flex-1 w-full">
                 {servers.data.map((server:any) => (
                     <div key={server.id}>
                         <NavigationItem id={server.id} name={server.name} imageUrl={server.imageUrl}/>
                     </div>
                 ))}
+                
+                <AddServerAction/>
             </ScrollArea>
+        
+
             <div className="pb-3 mt-auto flex items-center flex-col gap-y-4">
                 <ModeToggle></ModeToggle>
                 <button className="group flex relative items-center mb-3">
