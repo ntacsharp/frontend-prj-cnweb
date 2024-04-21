@@ -12,7 +12,7 @@ const ServerIdPage = () => {
       try {
         const serverData = await getServerById(
           params?.serverId,
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOiIyIiwiaWF0IjoxNzEzNDk4NTIwLCJleHAiOjE3MTM3MTQ1MjB9.3Mkm6n9BMXJcJyWsHeX23JlBRu15eFHbk-BwUOmUa_w'
+          process.env.NEXT_PUBLIC_TOKEN
         );
         setGeneralChannelId(serverData.data.channels[0].id);
       
