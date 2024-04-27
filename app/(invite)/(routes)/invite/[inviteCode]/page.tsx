@@ -15,8 +15,9 @@ const InviteCodePage = async ({
     if(!params.inviteCode) {
         return redirect("/");
     }
-
-    const resp = await joinServer(params.inviteCode, process.env.token);
+    const token = sessionStorage.getItem('token');
+    if(!token) redirect("/login");
+    const resp = await joinServer(params.inviteCode, token);
 
     if(resp){
         return redirect(`/servers/${resp.data.id}`);

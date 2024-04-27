@@ -1,10 +1,10 @@
-// "use client"
+"use client"
 
-import React, { FormEvent, useState } from 'react';
-import { signIn } from 'next-auth/react';
+import React, { FormEvent, useEffect, useState } from 'react';
+import { getSession, signIn } from 'next-auth/react';
 import Link from 'next/link';
-// import {login} from "@/app/api/UserApi"
 import { redirect, useRouter } from 'next/navigation';
+import { login } from "@/app/api/UserApi"
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -13,16 +13,39 @@ const Login = () => {
 
     function handleSubmit(e: FormEvent) {
         e.preventDefault();
-        signIn("credentials", {
-            email: email,
-            password: password,
-            redirect: false
-        });
+        login(email, password, "credentials")
+            .then(response => {
+                const token = response.data.token;
+                if (typeof window !== 'undefined') sessionStorage.setItem('token', token);
+                redirect(`/servers/1`);
+            })
+            .catch(error => {
+                console.error('Login failed:', error);
+            });
     }
 
     function handleSignInWithGoogle() {
         signIn("google");
     }
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const session = await getSession();
+            if (session) {
+                console.log(session.user);
+                login(session.user?.email, "", "google")
+                    .then(response => {
+                        const token = response.data.token;
+                        if (typeof window !== 'undefined') sessionStorage.setItem('token', token);
+                        redirect(`/servers/1`);
+                    })
+                    .catch(error => {
+                        console.error('Login failed:', error);
+                    });
+            }
+        };
+        fetchData();
+    }, []);
 
     return (
         <div className='mx-auto h-screen flex flex-col justify-center items-center'>

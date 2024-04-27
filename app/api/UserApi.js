@@ -13,12 +13,12 @@ export const signUp = (username, email, password, displayName) => {
     return apiClient.post(`/api/user/register`, payload);
 };
 
-export const login =  (email,password) => {
+export const login = async (email,password, provider) => {
     const payload = {
         email: email,
         password: password,
+        provider: provider
     };
-    console.log(payload)
     return apiClient.post(`/api/user/login`, payload);
 }
 

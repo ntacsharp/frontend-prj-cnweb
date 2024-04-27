@@ -15,7 +15,7 @@ import { Button } from "../ui/button";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FileUpload } from "../file-upload";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 const formSchema = z.object({
     name: z.string().min(1,{
@@ -49,7 +49,9 @@ export const InitialModal = () =>{
     const onSubmit = async (values: z.infer<typeof formSchema>) =>{
         try {
             console.log(values);
-            await createServer(values, process.env.token)
+            const token = sessionStorage.getItem('token');
+            if(!token) redirect("/login");
+            await createServer(values, token);
             
             form.reset();
             router.refresh();
