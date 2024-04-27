@@ -9,4 +9,5 @@ export class Channel {
         createdAt = createdAt;
         updatedAt = updatedAt;
     }
+    
 }
