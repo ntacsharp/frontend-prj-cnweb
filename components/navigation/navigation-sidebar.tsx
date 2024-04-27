@@ -10,11 +10,24 @@ import DirectMessageAction from "./direct-message-action";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export const NavigationSidebar = async () => {
-
-    const token = sessionStorage.getItem('token');
-    if (!token) redirect("/login");
-    const servers = await listAllServers(token);
+export const NavigationSidebar = () => {
+    const [servers, setServers] = useState([]);
+    useEffect(() => {
+        const fetchData = async () => {
+            const token = sessionStorage.getItem('token');
+            if(!token) redirect('/login');
+            const response = await listAllServers(token)
+                .then((res) => {
+                    if(res.status == 200){
+                        setServers(res.data);
+                    }
+                    else{
+                        redirect('/login');
+                    }
+                })
+        };
+        fetchData();
+    }, []);
     return (
         <div className="space-y-4 flex flex-col items-center 
         h-full w-full text-primary dark:bg-[#1E1F22] py-3 bg-[#E3E5E8]">
@@ -24,7 +37,7 @@ export const NavigationSidebar = async () => {
                          dark:bg-zinc-700 rounded-md w-14 mx-auto"/>
 
             <ScrollArea className="flex-1 w-full">
-                {servers.data.map((server: any) => (
+                {servers.map((server: any) => (
                     <div key={server.id}>
                         <NavigationItem id={server.id} name={server.name} imageUrl={server.imageUrl} />
                     </div>

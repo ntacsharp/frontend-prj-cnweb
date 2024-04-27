@@ -32,7 +32,6 @@ const Login = () => {
         const fetchData = async () => {
             const session = await getSession();
             if (session) {
-                console.log(session.user);
                 login(session.user?.email, "", "google")
                     .then(response => {
                         const token = response.data.token;
