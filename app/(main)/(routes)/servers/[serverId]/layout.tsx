@@ -1,11 +1,15 @@
+"use client"
+
 import { getServerById } from "@/app/api/ServerApi";
 import ServerSidebar from "@/components/server/server-sidebar";
+import { redirect } from "next/navigation";
 
 const ServerIdLayout = async ({children,params,}:{children:React.ReactNode,params:{serverId:string}}) =>{
 
     // Khi co authen voi id thi se xu li kiem tra sau
-
-    const server = await getServerById(params.serverId, process.env.token)
+    const token = sessionStorage.getItem('token');
+    if(!token) redirect("/login");
+    const server = await getServerById(params.serverId, token)
 
     return(
         <div className="h-full">

@@ -14,7 +14,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useForm } from "react-hook-form";
 import { FileUpload } from "../file-upload";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useModal } from "@/hook/use-modal";
 
 const formSchema = z.object({
@@ -44,7 +44,9 @@ export const CreateServerModal = () =>{
     const onSubmit = async (values: z.infer<typeof formSchema>) =>{
         try {
             console.log(values);
-            const response = await createServer(values, process.env.token)
+            const token = sessionStorage.getItem('token');
+            if(!token) redirect("/login");
+            const response = await createServer(values, token)
             const id = response.data.id;
             form.reset();
             router.refresh();
