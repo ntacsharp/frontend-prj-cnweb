@@ -14,7 +14,7 @@ import { UserAvatar } from "../user-avatar";
 import { Check, Gavel, Loader2, MoreVertical, Shield, ShieldAlert, ShieldCheck, ShieldQuestion } from "lucide-react";
 import { useState } from "react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuPortal, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "../ui/dropdown-menu";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { changeMemberRole, deleteMember } from "@/app/api/MemberApi";
 
 const roleIconMap = {
@@ -33,8 +33,9 @@ export const MembersModal = () => {
     const onRoleChange = async (memberId: string, serverId: string, role: string) => {
         try {
             setLoadingId(memberId);
-
-            var response = await changeMemberRole(role, {memberId, serverId}, process.env.token);
+            const token = sessionStorage.getItem('token');
+            if(!token) redirect("/login");
+            var response = await changeMemberRole(role, {memberId, serverId}, token);
 
             router.refresh();
             onOpen("members", { server: response.data })
@@ -50,7 +51,9 @@ export const MembersModal = () => {
     const onKick = async (memberId: string, serverId: string) => {
         try{
             setLoadingId(memberId);
-            var response = await deleteMember({memberId, serverId}, process.env.token);
+            const token = sessionStorage.getItem('token');
+            if(!token) redirect("/login");
+            var response = await deleteMember({memberId, serverId}, token);
             router.refresh();
             onOpen("members", { server: response.data })
         }

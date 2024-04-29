@@ -3,7 +3,7 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod"
 
-import { createChannel } from "@/app/api/ChannelApi";
+import { createChannel, updateChannel } from "@/app/api/ChannelApi";
 
 import {
     Dialog, DialogContent, DialogDescription,
@@ -75,7 +75,7 @@ export const EditChannelModal = () => {
         try {
             console.log(values);
 
-            // const response = await editChannel(values,serverId, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOiIyIiwiaWF0IjoxNzEzNDk4NTIwLCJleHAiOjE3MTM3MTQ1MjB9.3Mkm6n9BMXJcJyWsHeX23JlBRu15eFHbk-BwUOmUa_w');
+            await updateChannel(values,channel?.id,serverId ,window.sessionStorage.getItem('token'));
             form.reset();
             router.refresh();
             onClose();

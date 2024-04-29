@@ -17,7 +17,6 @@ import { useForm } from "react-hook-form";
 import { FileUpload } from "../file-upload";
 import { useRouter } from "next/navigation";
 import { useModal } from "@/hook/use-modal";
-import { Content } from "next/font/google";
 
 const formSchema = z.object({
     fileUrl: z.string().min(1,{

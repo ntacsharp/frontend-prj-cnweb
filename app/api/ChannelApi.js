@@ -18,7 +18,7 @@ export const deleteChannel = (channelId, token) => {
     };
     return apiClient.delete(`/api/channel/${channelId}`,{headers: headers})
 }
-export const updateChannel = async (values, serverId, token) => {
+export const updateChannel = async (values,channelId ,serverId, token) => {
     const payload = {
         name: values.name,
         type: values.type
@@ -28,7 +28,7 @@ export const updateChannel = async (values, serverId, token) => {
     };
 
     console.log(payload);
-    return apiClient.patch(`/api/server/${serverId}`, payload,{ headers: headers });
+    return apiClient.put(`/api/channel/${channelId}?serverId=${serverId}`, payload,{ headers: headers });
 }
 export const getChannelById = async (channelId, token) => {
     const headers = {
