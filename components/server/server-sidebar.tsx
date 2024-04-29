@@ -1,6 +1,5 @@
 "use client"
 
-import React, { useState, useEffect } from "react";
 import { getServerById } from "@/app/api/ServerApi";
 import ServerHeader from "./server-header";
 import { ScrollArea } from "../ui/scroll-area";
@@ -11,41 +10,43 @@ import { ChannelType } from "@/model/ChannelType";
 import { ServerChannel } from "./server-channel";
 import { ServerMember } from "./server-member";
 import { Member } from "@/model/Member";
+import { useEffect, useState } from "react";
+import { redirect } from "next/navigation";
 import { Channel } from "@/model/Channel";
-import { MemberRole } from "@/model/MemberRole";
 
-export const ServerSidebar = ({ serverId }: { serverId: string }) => {
-    const [server, setServer] = useState(null);
-    const [myRole, setMyRole] = useState(MemberRole.GUEST);
-    const [textChannels, setTextChannels] = useState([]);
-    const [audioChannels, setAudioChannels] = useState([]);
-    const [videoChannels, setVideoChannels] = useState([]);
+const ServerSidebar = ({ serverId }: { serverId: string }) => {
+
+    //const response = await getServerById(serverId, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOiIyIiwiaWF0IjoxNzE0MjA3MzE5LCJleHAiOjE3MTY3OTkzMTl9.QhxuGRVrTEOx6lE7xnX-GhkMPHU8NxC9LNKjqu1P4_E')
+    // myId cho nay loi logic do chua co pi getprofile cho user
+    const [server, setServer] = useState();
+    const [myId, setMyId] = useState();
+    const [channels, setChannels] = useState([]);
     const [members, setMembers] = useState([]);
-
+    const [myRole, setMyRole] = useState();
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                const response = await getServerById(serverId, process.env.NEXT_PUBLIC_TOKEN);
-                const data = response.data;
-                setServer(data);
-                const myId = data?.profileId;
-                const text = data?.channels.filter((channel: Channel) => channel.type === ChannelType.TEXT);
-                const audio = data?.channels.filter((channel: Channel) => channel.type === ChannelType.AUDIO);
-                const video = data?.channels.filter((channel: Channel) => channel.type === ChannelType.VIDEO);
-                const role = data?.members.filter((member: any) => member.profileId === myId)[0]?.role;
-
-                setTextChannels(text);
-                setAudioChannels(audio);
-                setVideoChannels(video);
-                setMembers(data.members);
-                setMyRole(role);
-            } catch (error) {
-                console.error("Error fetching server:", error);
-            }
+            const token = sessionStorage.getItem('token');
+            if(!token) redirect('/login');
+            const response = await getServerById(serverId, token)
+                .then((res) => {
+                    if(res.status == 200){
+                        setServer(res.data);
+                        setMyId(res.data.profileId);
+                        setChannels(res.data.channels);
+                        setMembers(res.data.members);
+                        setMyRole(res.data.members.filter((member: any) => member.profileId === res.data.profileId)[0].role);
+                    }
+                    else{
+                        redirect('/login');
+                    }
+                })
         };
-
         fetchData();
-    }, [serverId]);
+    }, []);
+    const textChannels = channels.filter((channel: Channel) => channel.type === ChannelType.TEXT)
+    const audioChannels = channels.filter((channel: Channel) => channel.type === ChannelType.AUDIO)
+    const videoChannels = channels.filter((channel: Channel) => channel.type === ChannelType.VIDEO)
+    // const myRole = members.filter((member: any) => member.profileId === myId)[0].role;
 
     if (!server) {
         return <div>Select a server!</div>;

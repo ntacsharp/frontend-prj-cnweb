@@ -75,7 +75,7 @@ export const CreateChannelModal = () => {
         try {
             console.log(values);
 
-            const response = await createChannel(values,serverId, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOiIyIiwiaWF0IjoxNzEzNDk4NTIwLCJleHAiOjE3MTM3MTQ1MjB9.3Mkm6n9BMXJcJyWsHeX23JlBRu15eFHbk-BwUOmUa_w');
+            const response = await createChannel(values,serverId, window.sessionStorage.getItem('token'));
             const id = response.data.id;
             form.reset();
             router.refresh();

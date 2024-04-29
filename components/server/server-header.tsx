@@ -5,10 +5,8 @@ import { DropdownMenuSeparator } from "@radix-ui/react-dropdown-menu";
 import { useModal } from "@/hook/use-modal";
 
 
-const ServerHeader = ({ server, role }: { server: any, role: string }) => {
+const ServerHeader = ({ server, role }: { server: any, role: string | undefined}) => {
     const { onOpen } = useModal();
-
-    console.log(role)
     const isAdmin = role === "ADMIN"
     const isModerator = isAdmin || role === "MODERATOR"
     return (

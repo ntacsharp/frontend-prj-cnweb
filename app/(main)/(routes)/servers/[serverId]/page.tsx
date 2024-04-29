@@ -1,4 +1,5 @@
 "use client"
+
 import { getServerById } from "@/app/api/ServerApi";
 import { redirect, useParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -12,7 +13,7 @@ const ServerIdPage = () => {
       try {
         const serverData = await getServerById(
           params?.serverId,
-          process.env.NEXT_PUBLIC_TOKEN
+          window.sessionStorage.getItem("token")
         );
         setGeneralChannelId(serverData.data.channels[0].id);
       

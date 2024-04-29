@@ -18,6 +18,13 @@ export const ChatWelcome = ({
                     </div>
                 )
             }
+            <p className="tetx-xl md:text-3xl font-bold">
+                {type === "channel" ? "Chào mừng đến với #" : ""}{name}
+            </p>
+            <p className="text-zinc-600 dark:text-zinc-400 tex-sm">
+                {type === "channel" ? `Đây là bắt đầu của kênh ${name}. Hãy bắt đầu trò chuyện!` : `Đây là bắt đầu của cuộc trò chuyện. Hãy bắt đầu trò chuyện! với ${name}`}
+            </p>
+
             
         </div>
     )
