@@ -30,6 +30,7 @@ const ServerSidebar = ({ serverId }: { serverId: string }) => {
             const response = await getServerById(serverId, token)
                 .then((res) => {
                     if(res.status == 200){
+                        console.log(res);
                         setServer(res.data);
                         setMyId(res.data.profileId);
                         setChannels(res.data.channels);
