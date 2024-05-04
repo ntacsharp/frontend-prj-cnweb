@@ -3,6 +3,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form';
 import * as z from "zod";
+import qs from "query-string"
 import { sendMessage } from "@/app/api/MessageApi"
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -14,11 +15,11 @@ import {
 import { Input } from '@/components/ui/input';
 import { Plus, Smile } from 'lucide-react';
 import { redirect } from 'next/navigation';
+import { useModal } from '@/hook/use-modal';
 
 interface ChatInputProps {
     apiUrl: string;
-    serverId: string | undefined;
-    channelId: string | string[] | undefined;
+    query?: Record<string, any>;
     name: string;
     type: "conversation" | "channel";
 }
@@ -29,11 +30,11 @@ const formSchema = z.object({
 
 const ChatInput = ({
     apiUrl,
-    serverId,
-    channelId,
+    query,
     name,
     type
 }: ChatInputProps) => {
+    const { onOpen } = useModal();
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -47,7 +48,11 @@ const ChatInput = ({
         try {
             const token = sessionStorage.getItem('token');
             if(!token) redirect("/login");
-            const response = await sendMessage(token, serverId, channelId, value);
+            const url = qs.stringifyUrl({
+                url: apiUrl,
+                query
+            });
+            const response = await sendMessage(token, url, value);
         }
         catch (error) {
             console.log(error);
@@ -66,7 +71,7 @@ const ChatInput = ({
                                 <div className='relative p-4 pb-6'>
                                     <button
                                         type="button"
-                                        onClick={() => { }}
+                                        onClick={() => onOpen("messageFile", {})}
                                         className='absolute top-7 left-8 h-[24px] w-[24px] bg-zinc-500 dark:bg-zinc-400 hover:bg-zinc-600 dark:hover:bg-zinc-300 transition rounded-full p-1 flex items-center justify-center'
                                     >
                                         <Plus className='text-white dark:text-[#31]' />

@@ -25,7 +25,7 @@ const formSchema = z.object({
   
 })
 
-export const InitialModal = () =>{
+export const MessageFileModal = () =>{
     const router = useRouter();
 
     
@@ -73,7 +73,7 @@ export const InitialModal = () =>{
     };
 
     return (
-        <Dialog open={isModalOpen}>
+        <Dialog open={isModalOpen} onOpenChange={handleClose}>
             <DialogContent className="bg-white text-black overflow-hidden">
                 <DialogHeader className="pt-8 px-6">
                    <DialogTitle className="text-center text-2xl font-bold">
