@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from '@/components/ui/input';
 import { Plus } from 'lucide-react';
-import { redirect } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { useModal } from '@/hook/use-modal';
 import EmojiPicker from '../emoji-picker';
 
@@ -36,6 +36,7 @@ const ChatInput = ({
     type
 }: ChatInputProps) => {
     const { onOpen } = useModal();
+    const router = useRouter();
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -54,6 +55,8 @@ const ChatInput = ({
                 query
             });
             const response = await sendMessage(token, url, value);
+            form.reset();
+            router.refresh();
         }
         catch (error) {
             console.log(error);
@@ -84,7 +87,7 @@ const ChatInput = ({
                                         {...field}
                                     />
                                     <div className='absolute top-7 right-8'>
-                                        <EmojiPicker/>
+                                        <EmojiPicker onChange={(emoji: string) => field.onChange(`${field.value} ${emoji}`)} />
                                     </div>
                                 </div>
                             </FormControl>
