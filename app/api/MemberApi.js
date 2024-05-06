@@ -1,3 +1,4 @@
+import { Member } from '@/model/Member';
 import { apiClient } from './ApiClient';
 
 export const changeMemberRole = async (values, ids, token) => {
@@ -21,7 +22,7 @@ export const deleteMember = async (ids, token) => {
     return apiClient.delete(`/api/member/${ids.memberId}`, payload, {headers: headers});
 }
 
-export const getCurrentMember = async (serverId, token) => {
+export const getCurrentMember = async (serverId, token)  => {
     const headers = {
         Authorization: `Bearer ${token}`,
     };
