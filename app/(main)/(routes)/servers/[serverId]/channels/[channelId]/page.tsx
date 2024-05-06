@@ -24,12 +24,12 @@ const ChannelIdPage = () => {
     useEffect(() => {
         const fetchChannel = async () => {
             try {
-                const channelData = await getChannelById(params?.channelId, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOiI0NGM5ZTYxYS0yMmM1LTQ2NjctYjY4MS1kNDk1YjEwZGE0NjUiLCJpYXQiOjE3MTQ5MjA5NjksImV4cCI6MTcxNzUxMjk2OX0.Ga5fcsyy3_mQtbKKEfLmElD5X027anWIKShs-X5II9Q');
+                const channelData = await getChannelById(params?.channelId, sessionStorage.getItem('token'));
                 setChannelName(channelData.data.name);
                 setChannel(channelData.data);
 
 
-                const memberData = await getCurrentMember(serverId, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOiI0NGM5ZTYxYS0yMmM1LTQ2NjctYjY4MS1kNDk1YjEwZGE0NjUiLCJpYXQiOjE3MTQ5MjA5NjksImV4cCI6MTcxNzUxMjk2OX0.Ga5fcsyy3_mQtbKKEfLmElD5X027anWIKShs-X5II9Q');
+                const memberData = await getCurrentMember(serverId, sessionStorage.getItem('token'));
                 setMember(memberData); 
 
             } catch (error) {
