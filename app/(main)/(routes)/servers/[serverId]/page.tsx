@@ -1,6 +1,7 @@
 "use client"
 
 import { getServerById } from "@/app/api/ServerApi";
+import { Loader } from "lucide-react";
 import { redirect, useParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
@@ -35,7 +36,8 @@ const ServerIdPage = () => {
   }
 
   if (!generalChannelId) {
-    return <div>Loading...</div>;
+    return <div>
+          </div>;
   }
   else{
     router.push(`/servers/${params?.serverId}/channels/${generalChannelId}`)

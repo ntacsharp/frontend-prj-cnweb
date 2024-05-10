@@ -7,6 +7,7 @@ import ChatHeader from "@/components/chat/chatheader";
 import { Channel } from "@/model/Channel";
 import { ChannelType } from "@/model/ChannelType";
 import { Member } from "@/model/Member";
+import { Loader } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { any, set } from "zod";
@@ -42,29 +43,38 @@ const ChannelIdPage = () => {
         }
     }, [params?.channelId]);
 
+    if(channelName!==""){
+        return (
+            <div className="bg-white dark:bg-[#313338] flex flex-col h-screen">
+                <ChatHeader serverId={serverId} type="channel" name={channelName} />
+                <div className="flex-1"></div>
+                <ChatMessages
+                member={member}
+                name={channel.name}
+                chatId={channel.id}
+                type="channel"
+                apiUrl="/api/messages"
+                socketUrl="/api/socket/messages"
+                socketQuery={{
+                  channelId: channel.id,
+                  serverId: channel.serverId,
+                }}
+                paramKey="channelId"
+                paramValue={channel.id}
+              />
+                <ChatInput name={channelName} type="channel" apiUrl="/api/socket/messages" query={{
+                    channelId: params?.channelId,
+                    serverId: serverId
+                }} />
+            </div>
+        )
+    }
+
     return (
-        <div className="bg-white dark:bg-[#313338] flex flex-col h-screen">
-            <ChatHeader serverId={serverId} type="channel" name={channelName} />
-            <div className="flex-1"></div>
-            <ChatMessages
-            member={member}
-            name={channel.name}
-            chatId={channel.id}
-            type="channel"
-            apiUrl="/api/messages"
-            socketUrl="/api/socket/messages"
-            socketQuery={{
-              channelId: channel.id,
-              serverId: channel.serverId,
-            }}
-            paramKey="channelId"
-            paramValue={channel.id}
-          />
-            <ChatInput name={channelName} type="channel" apiUrl="/api/socket/messages" query={{
-                channelId: params?.channelId,
-                serverId: serverId
-            }} />
+        <div className="flex flex-col h-full w-full">
+            <Loader className="m-auto h-auto flex"/>
         </div>
     )
+
 }
 export default ChannelIdPage;
