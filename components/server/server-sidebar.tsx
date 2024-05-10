@@ -4,16 +4,18 @@ import { getServerById } from "@/app/api/ServerApi";
 import ServerHeader from "./server-header";
 import { ScrollArea } from "../ui/scroll-area";
 import { Separator } from "../ui/separator";
-import { Hash, Mic, Search, ShieldAlert, ShieldCheck, Video } from "lucide-react";
+import { Hash, Loader, Loader2, LoaderCircle, LucideLoader, Mic, Search, ShieldAlert, ShieldCheck, Video } from "lucide-react";
 import { ServerSection } from "./server-section";
 import { ChannelType } from "@/model/ChannelType";
 import { ServerChannel } from "./server-channel";
 import { ServerMember } from "./server-member";
 import { Member } from "@/model/Member";
 import { useEffect, useState } from "react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Channel } from "@/model/Channel";
 import ServerSearch from "./server-search";
+import { ServerSkeleton } from "./server-skeleton";
+import PageLoader from "next/dist/client/page-loader";
 
 const iconMap = {
     [ChannelType.TEXT]: <Hash className="mr-2 h-4 w-4"/>,
@@ -36,24 +38,27 @@ const ServerSidebar = ({ serverId }: { serverId: string }) => {
     const [channels, setChannels] = useState([]);
     const [members, setMembers] = useState([]);
     const [myRole, setMyRole] = useState();
+    const router = useRouter();
+
     useEffect(() => {
         const fetchData = async () => {
             const token = sessionStorage.getItem('token');
-            if (!token) redirect('/login');
-            const response = await getServerById(serverId, token)
+
+            if (token==null) router.push("/login");
+
+            else{
+                const response = await getServerById(serverId, token)
                 .then((res) => {
-                    if (res.status == 200) {
+                    if (res.status == 200 && res.data != null) {
                         console.log(res);
                         setServer(res.data);
                         setMyId(res.data.profileId);
                         setChannels(res.data.channels);
                         setMembers(res.data.members);
                         setMyRole(res.data.members.filter((member: Member) => member.profileId === res.data.profileId)[0].role);
-                    }
-                    else {
-                        redirect('/login');
-                    }
+                    };
                 })
+            }
         };
         fetchData();
     }, []);
@@ -63,7 +68,11 @@ const ServerSidebar = ({ serverId }: { serverId: string }) => {
     // const myRole = members.filter((member: any) => member.profileId === myId)[0].role;
 
     if (!server) {
-        return <div>Select a server!</div>;
+        return (
+        <div className="flex flex-col h-full w-full">
+            <Loader className="m-auto h-auto flex"/>
+        </div>
+        );
     }
 
     return (

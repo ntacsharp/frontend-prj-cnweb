@@ -16,16 +16,17 @@ export const NavigationSidebar = () => {
     useEffect(() => {
         const fetchData = async () => {
             const token = sessionStorage.getItem('token');
-            if(!token) redirect('/login');
-            const response = await listAllServers(token)
+            if(token!=null){
+                const response = await listAllServers(token)
                 .then((res) => {
-                    if(res.status == 200){
+                    if(res.status == 200 && res.data !=null){
                         setServers(res.data);
                     }
                     else{
                         redirect('/login');
                     }
                 })
+            }
         };
         fetchData();
     }, []);
