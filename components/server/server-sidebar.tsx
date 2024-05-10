@@ -14,8 +14,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Channel } from "@/model/Channel";
 import ServerSearch from "./server-search";
-import { ServerSkeleton } from "./server-skeleton";
-import PageLoader from "next/dist/client/page-loader";
 
 const iconMap = {
     [ChannelType.TEXT]: <Hash className="mr-2 h-4 w-4"/>,
@@ -68,11 +66,13 @@ const ServerSidebar = ({ serverId }: { serverId: string }) => {
     // const myRole = members.filter((member: any) => member.profileId === myId)[0].role;
 
     if (!server) {
+        if(serverId =="1")
+            return(<div></div>)
         return (
-        <div className="flex flex-col h-full w-full">
-            <Loader className="m-auto h-auto flex"/>
-        </div>
-        );
+            <div className="flex flex-col h-full w-full">
+                <Loader className="m-auto h-auto flex"/>
+            </div>
+            );
     }
 
     return (

@@ -10,9 +10,11 @@ import AddServerAction from "./add-server-action";
 import DirectMessageAction from "./direct-message-action";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
+import { UserAvatar } from "../UserAvatar";
 
 export const NavigationSidebar = () => {
     const [servers, setServers] = useState([]);
+    const [profileId,setProfileId] = useState("");
     useEffect(() => {
         const fetchData = async () => {
             const token = sessionStorage.getItem('token');
@@ -21,6 +23,7 @@ export const NavigationSidebar = () => {
                 .then((res) => {
                     if(res.status == 200 && res.data !=null){
                         setServers(res.data);
+                        setProfileId(res.data[0]?.profileId)
                     }
                     else{
                         redirect('/login');
@@ -30,6 +33,7 @@ export const NavigationSidebar = () => {
         };
         fetchData();
     }, []);
+    
     return (
         <div className="space-y-4 flex flex-col items-center 
         h-full w-full text-primary dark:bg-[#1E1F22] py-3 bg-[#E3E5E8]">
@@ -51,16 +55,7 @@ export const NavigationSidebar = () => {
 
             <div className="pb-3 mt-auto flex items-center flex-col gap-y-4">
 
-                <button className="group flex relative items-center mb-3">
-                    <div className="relative group flex mx-3 h-[48px] w-[48px] rounded-[24px] group-hover:rounded-[16px] transition-all overflow-hidden">
-                        <Image
-                            fill
-                            src='https://utfs.io/f/3177dc04-023d-45ba-955a-59a05fdb9e24-1ww8e.jpg'
-                            alt="User Image"
-                        />
-                    </div>
-
-                </button>
+                <UserAvatar profileId={profileId}/>
                 <ModeToggle/>
             </div>
 
