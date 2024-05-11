@@ -1,6 +1,7 @@
+"use client"
 import { joinServer } from '@/app/api/ServerApi';
 import { redirect } from 'next/navigation';
-import React from 'react'
+import React, { useEffect } from 'react';
 
 interface InviteCodePageProps {
     params: {
@@ -8,26 +9,42 @@ interface InviteCodePageProps {
     }
 }
 
-const InviteCodePage = async ({
+const InviteCodePage = ({
     params
 }: InviteCodePageProps) => {
     
-    if(!params.inviteCode) {
-        return redirect("/");
-    }
-    const token = sessionStorage.getItem('token');
-    if(!token) redirect("/login");
-    const resp = await joinServer(params.inviteCode, token);
+    useEffect(() => {
+        const fetchData = async () => {
+            if (!params.inviteCode) {
+                return redirect("/");
+            }
+            const token = sessionStorage.getItem('token');
 
-    if(resp){
-        return redirect(`/servers/${resp.data.id}`);
-    }
+            if (!token) {
+                redirect("/login");
+                return; // Add return here to exit the function if token is not available
+            }
+            
+            try {
+                const resp = await joinServer(params.inviteCode, token);
+
+                if (resp) {
+                    redirect(`/servers/${resp.data.id}`);
+                }
+            } catch (error) {
+                // Handle error if joinServer fails
+                console.error("Error:", error);
+            }
+        };
+
+        fetchData(); // Call the fetchData function
+    }, [params.inviteCode]); // Add params.inviteCode as dependency
 
     return (
         <div>
             xdd
         </div>
-    )
-}
+    );
+};
 
-export default InviteCodePage
+export default InviteCodePage;
