@@ -2,6 +2,7 @@ import qs from "query-string";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
 import { useSocket } from "@/components/providers/socket-provider";
+import axios from "axios";
 
 interface ChatQueryProps {
   queryKey: string;
@@ -27,8 +28,13 @@ export const useChatQuery = ({
       }
     }, { skipNull: true });
 
-    const res = await fetch(url);
-    return res.json();
+    const res : any = await axios.get(url,{
+      headers: {
+        Authorization: `Bearer ${window.sessionStorage.getItem("token")}`,
+      }
+    });
+    console.log(res);
+    return res;
   };
 
 const {

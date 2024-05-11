@@ -53,7 +53,7 @@ const ChannelIdPage = () => {
                 name={channel.name}
                 chatId={channel.id}
                 type="channel"
-                apiUrl="/api/messages"
+                apiUrl="http://localhost:4869/api/messages"
                 socketUrl="/api/socket/messages"
                 socketQuery={{
                   channelId: channel.id,
