@@ -29,10 +29,10 @@ export const DeleteServerModal = () => {
 
   const DeleteServer = async () =>{
     try {
-        console.log(server?.id);
         setIsLoading(true);
+        const token = sessionStorage.getItem('token');
         // call api từ back end 
-        await deleteServer(server?.id,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOiIyIiwiaWF0IjoxNzEzNDk4NTIwLCJleHAiOjE3MTM3MTQ1MjB9.3Mkm6n9BMXJcJyWsHeX23JlBRu15eFHbk-BwUOmUa_w');
+        await deleteServer(server?.id,token);
         onClose();
         router.refresh();
         router.push("/servers/1");

@@ -22,6 +22,7 @@ export const UserAvatar = ({profileId}:{profileId : string}) =>{
                 .then((res) => {
                     if(res.status == 200 && res.data !=null){
                         setProfile(res.data)
+                        if (typeof window !== 'undefined') sessionStorage.setItem('profileId', res.data.id);
                         setImageSrc(res.data.imageUrl)
                     }
                     if(res.status == 200 && res.data.name == ""){

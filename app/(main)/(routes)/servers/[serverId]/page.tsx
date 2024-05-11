@@ -2,7 +2,7 @@
 
 import { getServerById } from "@/app/api/ServerApi";
 import { ChatWelcome } from "@/components/chat/chat-welcome";
-import { Loading, Welcome } from "@/components/welcome";
+import { Welcome } from "@/components/welcome";
 import { DiscordLogoIcon } from "@radix-ui/react-icons";
 import { Loader } from "lucide-react";
 import { redirect, useParams, useRouter } from "next/navigation";
