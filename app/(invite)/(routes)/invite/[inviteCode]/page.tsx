@@ -1,6 +1,6 @@
 "use client"
 import { joinServer } from '@/app/api/ServerApi';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
 
 interface InviteCodePageProps {
@@ -12,16 +12,17 @@ interface InviteCodePageProps {
 const InviteCodePage = ({
     params
 }: InviteCodePageProps) => {
+    const router = useRouter();
     
     useEffect(() => {
         const fetchData = async () => {
             if (!params.inviteCode) {
-                return redirect("/");
+                return router.push("/");
             }
             const token = sessionStorage.getItem('token');
 
             if (!token) {
-                redirect("/login");
+                router.push("/login");
                 return; // Add return here to exit the function if token is not available
             }
             
@@ -29,7 +30,7 @@ const InviteCodePage = ({
                 const resp = await joinServer(params.inviteCode, token);
 
                 if (resp) {
-                    redirect(`/servers/${resp.data.id}`);
+                    router.push(`/servers/${resp.data.id}`);
                 }
             } catch (error) {
                 // Handle error if joinServer fails
