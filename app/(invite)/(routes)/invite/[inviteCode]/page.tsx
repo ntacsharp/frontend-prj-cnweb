@@ -1,6 +1,6 @@
 import { joinServer } from '@/app/api/ServerApi';
 import { redirect } from 'next/navigation';
-import React from 'react'
+import React, { useEffect } from 'react'
 
 interface InviteCodePageProps {
     params: {
@@ -15,13 +15,17 @@ const InviteCodePage = async ({
     if(!params.inviteCode) {
         return redirect("/");
     }
-    const token = sessionStorage.getItem('token');
-    if(!token) redirect("/login");
-    const resp = await joinServer(params.inviteCode, token);
-
-    if(resp){
-        return redirect(`/servers/${resp.data.id}`);
-    }
+    useEffect(() => {
+        const fetchData = async () => {
+            const token = sessionStorage.getItem('token');
+            if(!token) redirect("/login");
+            const resp = await joinServer(params.inviteCode, token);
+            if(resp){
+                return redirect(`/servers/${resp.data.id}`);
+            }
+        }
+        fetchData();
+    }, [])
 
     return (
         <div>
