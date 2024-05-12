@@ -1,8 +1,7 @@
 "use client"
-
 import { joinServer } from '@/app/api/ServerApi';
-import { redirect } from 'next/navigation';
-import React, { useEffect } from 'react'
+import { useRouter } from 'next/navigation';
+import React, { useEffect } from 'react';
 
 interface InviteCodePageProps {
     params: {
@@ -10,30 +9,43 @@ interface InviteCodePageProps {
     }
 }
 
-const InviteCodePage = async ({
+const InviteCodePage = ({
     params
 }: InviteCodePageProps) => {
+    const router = useRouter();
     
-    if(!params.inviteCode) {
-        return redirect("/");
-    }
     useEffect(() => {
         const fetchData = async () => {
-            const token = sessionStorage.getItem('token');
-            if(!token) redirect("/login");
-            const resp = await joinServer(params.inviteCode, token);
-            if(resp){
-                return redirect(`/servers/${resp.data.id}`);
+            if (!params.inviteCode) {
+                return router.push("/");
             }
-        }
-        fetchData();
-    }, [])
+            const token = sessionStorage.getItem('token');
+
+            if (!token) {
+                router.push("/login");
+                return; // Add return here to exit the function if token is not available
+            }
+            
+            try {
+                const resp = await joinServer(params.inviteCode, token);
+
+                if (resp) {
+                    router.push(`/servers/${resp.data.id}`);
+                }
+            } catch (error) {
+                // Handle error if joinServer fails
+                console.error("Error:", error);
+            }
+        };
+
+        fetchData(); // Call the fetchData function
+    }, [params.inviteCode]); // Add params.inviteCode as dependency
 
     return (
         <div>
             xdd
         </div>
-    )
-}
+    );
+};
 
-export default InviteCodePage
+export default InviteCodePage;
