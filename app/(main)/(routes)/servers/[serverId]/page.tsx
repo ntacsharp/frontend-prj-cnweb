@@ -19,6 +19,7 @@ const ServerIdPage = () => {
           params?.serverId,
           window.sessionStorage.getItem("token")
         );
+        console.log(serverData);
         setGeneralChannelId(serverData.data.channels[0].id);
       
       } catch (error) {
