@@ -23,6 +23,7 @@ import qs from "query-string";
 import { useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { editMessage } from '@/app/api/MessageApi';
+import { useModal } from '@/hook/use-modal';
 
 interface ChatItemProps {
   id: string;
@@ -68,8 +69,9 @@ export const ChatItem = ({
     }
   });
 
+  const { onOpen } = useModal();
+
   const [isEditing, setIsEditing] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
   const fileType = fileUrl?.split(".").pop();
   const isAdmin = currentMember.role === MemberRole.ADMIN;
   const isModerator = currentMember.role === MemberRole.MODERATOR;
@@ -217,6 +219,10 @@ export const ChatItem = ({
           )}
           <MyTooltip label='Delete'>
             <Trash
+              onClick={() => onOpen("deleteMessage", {
+                apiUrl: `${socketUrl}/${id}`,
+                query: socketQuery
+              })}
               className='cursor-pointer ml-auto w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition'
             />
           </MyTooltip>

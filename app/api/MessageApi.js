@@ -22,3 +22,11 @@ export const editMessage = async (token, url, value) => {
     const data = await apiClient.patch(url, payload, { headers: headers });
     return data.data
 }
+
+export const deleteMessage = async (token, url) => {
+    const headers = {
+        Authorization: `Bearer ${token}`,
+    };
+    const data = await apiClient.delete(url, { headers: headers });
+    return data.data
+}
