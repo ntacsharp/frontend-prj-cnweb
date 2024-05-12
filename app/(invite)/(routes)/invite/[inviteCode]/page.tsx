@@ -1,3 +1,5 @@
+"use client"
+
 import { joinServer } from '@/app/api/ServerApi';
 import { redirect } from 'next/navigation';
 import React, { useEffect } from 'react'
