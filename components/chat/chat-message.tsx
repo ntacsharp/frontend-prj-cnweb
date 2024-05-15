@@ -9,6 +9,7 @@ import { Message } from "@/model/Message";
 import { Profile } from "@/model/Profile";
 import { ChatItem } from "@/components/chat/chat-item";
 import { format } from "date-fns";
+import data from '@emoji-mart/data';
 
 const DATE_FORMAT = "d MMM yyyy, HH:mm";
 
@@ -37,6 +38,8 @@ export const ChatMessages = (
 ) => {
     const queryKey = `chat:${chatId}`;
 
+    console.log(member);
+
     const {
         data,
         fetchNextPage,
@@ -53,6 +56,9 @@ export const ChatMessages = (
     console.log(data);
 
 
+    if(member === undefined || data === undefined) {
+        return <div></div>;
+    }
 
     if (status === "pending") {
         return (
@@ -75,6 +81,9 @@ export const ChatMessages = (
           </div>
         )
       }
+    
+    
+    
 
     return (
         <div className="flex-1 flex flex-col py-4 overflow-y-auto">
@@ -89,6 +98,7 @@ export const ChatMessages = (
                                 // <div key={message.id}>
                                 //     {message.content}
                                 // </div>
+                            
                                 <ChatItem
                                     key={message.id}
                                     id={message.id}

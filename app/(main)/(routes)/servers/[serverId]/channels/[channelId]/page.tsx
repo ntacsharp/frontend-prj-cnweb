@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import { getChannelById } from "@/app/api/ChannelApi";
 import { getCurrentMember } from "@/app/api/MemberApi";
 import ChatInput from "@/components/chat/chat-input";
