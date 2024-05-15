@@ -1,11 +1,8 @@
 "use client"
 
 import { getServerById } from "@/app/api/ServerApi";
-import { ChatWelcome } from "@/components/chat/chat-welcome";
 import { Welcome } from "@/components/welcome";
-import { DiscordLogoIcon } from "@radix-ui/react-icons";
-import { Loader } from "lucide-react";
-import { redirect, useParams, useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
 const ServerIdPage = () => {

@@ -5,12 +5,9 @@ import ChatInput from "@/components/chat/chat-input";
 import { ChatMessages } from "@/components/chat/chat-message";
 import ChatHeader from "@/components/chat/chatheader";
 import { Channel } from "@/model/Channel";
-import { ChannelType } from "@/model/ChannelType";
-import { Member } from "@/model/Member";
 import { Loader } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
-import { any, set } from "zod";
 const ChannelIdPage = () => {
     const params = useParams();
     const serverId = params?.serverId.toString()
@@ -62,7 +59,7 @@ const ChannelIdPage = () => {
                 paramKey="channelId"
                 paramValue={channel.id}
               />
-                <ChatInput name={channelName} type="channel" apiUrl="/api/socket/messages" query={{
+                <ChatInput name={channelName} type="channel" apiUrl="http://localhost:4869/api/messages" query={{
                     channelId: params?.channelId,
                     serverId: serverId
                 }} />

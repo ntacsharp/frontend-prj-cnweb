@@ -55,10 +55,14 @@ export const MessageFileModal = () => {
                 query,
             });
 
+            const token = window.sessionStorage.getItem('token');
+
             axios.post(url, {
                 ...values,
-                Content: values.fileUrl,
-            })
+                content: values.fileUrl,
+            },{headers : {
+                Authorization : 'Bearer ' + token
+            }})
 
             form.reset();
             router.refresh();

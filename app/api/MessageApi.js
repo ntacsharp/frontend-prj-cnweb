@@ -5,7 +5,7 @@ export const sendMessage = async (token, url, value) => {
         Authorization: `Bearer ${token}`,
     };
     const payload = {
-        value: value.content
+        content: value.content
     }
     console.log(url);
     const data = await apiClient.post(url, payload, { headers: headers });
