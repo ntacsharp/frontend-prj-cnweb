@@ -3,6 +3,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 
 import { useSocket } from "@/components/providers/socket-provider";
 import axios from "axios";
+import data from '@emoji-mart/data';
 
 interface ChatQueryProps {
   queryKey: string;
@@ -34,7 +35,7 @@ export const useChatQuery = ({
       }
     });
     console.log(res);
-    return res;
+    return res.data;
   };
 
 const {

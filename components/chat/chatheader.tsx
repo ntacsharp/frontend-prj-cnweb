@@ -20,6 +20,9 @@ const ChatHeader =  ({serverId,name,type,imageUrl}:header_props) =>{
       <p className="font-semibold text-md text-black dark:text-white">
         {name}
       </p>
+      {
+        //todo: direct message video call
+      }
     </div>
   )
 }

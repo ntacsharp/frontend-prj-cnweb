@@ -7,7 +7,10 @@ import { Loader2, ServerCrash } from "lucide-react";
 import { Fragment } from "react";
 import { Message } from "@/model/Message";
 import { Profile } from "@/model/Profile";
+import { ChatItem } from "@/components/chat/chat-item";
+import { format } from "date-fns";
 
+const DATE_FORMAT = "d MMM yyyy, HH:mm";
 
 interface ChatMessagesProps {
     name: any;
@@ -24,8 +27,8 @@ interface ChatMessagesProps {
 }
 
 type MessageWithMemberWithProfile = Message & {
-    member : Member & {
-        profile : Profile
+    member: Member & {
+        profile: Profile
     }
 }
 
@@ -46,6 +49,8 @@ export const ChatMessages = (
         paramKey,
         paramValue,
     });
+
+    console.log(data);
 
 
 
@@ -78,14 +83,27 @@ export const ChatMessages = (
                     type={type} name={name}
                 />
                 <div className="flex flex-col-reverse mt-auto">
-                    {data?.pages?.map((group,i) => (
-                       <Fragment key={i}>
-                        {group?.items?.map((message : MessageWithMemberWithProfile) => (
-                            <div key={message.id}>
-                                {message.content}
-                            </div>
-                        ))}
-                       </Fragment>
+                    {data?.pages?.map((group, i) => (
+                        <Fragment key={i}>
+                            {group?.messages?.map((message: MessageWithMemberWithProfile) => (
+                                // <div key={message.id}>
+                                //     {message.content}
+                                // </div>
+                                <ChatItem
+                                    key={message.id}
+                                    id={message.id}
+                                    currentMember={member}
+                                    member={message.member}
+                                    content={message.content}
+                                    fileUrl={message.fileUrl}
+                                    deleted={message.deleted}
+                                    timestamp={format(new Date(message.createdAt), DATE_FORMAT)}
+                                    isUpdated={message.updatedAt !== message.createdAt}
+                                    socketUrl={socketUrl}
+                                    socketQuery={socketQuery}
+                                />
+                            ))}
+                        </Fragment>
                     ))}
                 </div>
             </div>
