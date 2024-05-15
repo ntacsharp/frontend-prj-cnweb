@@ -29,31 +29,30 @@ const roleIconMap = {
 
 const ServerSidebar = ({ serverId }: { serverId: string }) => {
 
-    //const response = await getServerById(serverId, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOiIyIiwiaWF0IjoxNzE0MjA3MzE5LCJleHAiOjE3MTY3OTkzMTl9.QhxuGRVrTEOx6lE7xnX-GhkMPHU8NxC9LNKjqu1P4_E')
-    // myId cho nay loi logic do chua co pi getprofile cho user
+
     const [server, setServer] = useState();
     const [myId, setMyId] = useState();
     const [channels, setChannels] = useState([]);
     const [members, setMembers] = useState([]);
     const [myRole, setMyRole] = useState();
     const router = useRouter();
-
+    
     useEffect(() => {
         const fetchData = async () => {
             const token = sessionStorage.getItem('token');
-
+            const profileId = sessionStorage.getItem('profileId');
             if (token==null) router.push("/login");
 
             else{
                 const response = await getServerById(serverId, token)
                 .then((res) => {
                     if (res.status == 200 && res.data != null) {
-                        console.log(res);
+                        
                         setServer(res.data);
                         setMyId(res.data.profileId);
                         setChannels(res.data.channels);
                         setMembers(res.data.members);
-                        setMyRole(res.data.members.filter((member: Member) => member.profileId === res.data.profileId)[0].role);
+                        setMyRole(res.data.members.filter((member: Member) => member.profileId === profileId)[0].role);
                     };
                 })
             }

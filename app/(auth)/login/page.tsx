@@ -17,6 +17,7 @@ const Login = () => {
             .then(response => {
                 const token = response.data.token;
                 if (typeof window !== 'undefined') sessionStorage.setItem('token', token);
+                
                 console.log('Login success:', response);
                 router.push('/servers/1');
             })
