@@ -10,6 +10,7 @@ import { ChannelType } from "@/model/ChannelType";
 import { Loader } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
+import { io as ClientIO } from "socket.io-client";
 const ChannelIdPage = () => {
     const params = useParams();
     const serverId = params?.serverId.toString()
@@ -22,6 +23,7 @@ const ChannelIdPage = () => {
 
 
     useEffect(() => {
+
         const fetchChannel = async () => {
             try {
                 const channelData = await getChannelById(params?.channelId, sessionStorage.getItem('token'));

@@ -10,6 +10,7 @@ import { Profile } from "@/model/Profile";
 import { ChatItem } from "@/components/chat/chat-item";
 import { format } from "date-fns";
 import data from '@emoji-mart/data';
+import { useChatSocket } from "@/hook/use-chat-socket";
 
 const DATE_FORMAT = "d MMM yyyy, HH:mm";
 
@@ -37,8 +38,9 @@ export const ChatMessages = (
     { name, member, chatId, apiUrl, socketUrl, socketQuery, paramKey, paramValue, type }: ChatMessagesProps
 ) => {
     const queryKey = `chat:${chatId}`;
+    const addKey = `chat:${chatId}:messages`;
+    const updateKey = `chat:${chatId}:messages:update`
 
-    console.log(member);
 
     const {
         data,
@@ -53,7 +55,8 @@ export const ChatMessages = (
         paramValue,
     });
 
-    console.log(data);
+    useChatSocket({ queryKey, addKey, updateKey });
+
 
 
     if(member === undefined || data === undefined) {
@@ -94,7 +97,7 @@ export const ChatMessages = (
                 <div className="flex flex-col-reverse mt-auto">
                     {data?.pages?.map((group, i) => (
                         <Fragment key={i}>
-                            {group?.messages?.map((message: MessageWithMemberWithProfile) => (
+                            {group?.items?.map((message: MessageWithMemberWithProfile) => (
                                 // <div key={message.id}>
                                 //     {message.content}
                                 // </div>
