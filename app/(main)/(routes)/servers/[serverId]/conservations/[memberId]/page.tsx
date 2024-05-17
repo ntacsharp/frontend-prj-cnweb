@@ -82,7 +82,7 @@ const MemberIdPage = ({ params, searchParams }: MemberIdPageProps) => {
                     chatId={conversation.id} 
                     type='conversation' 
                     apiUrl='http://localhost:4869/api/direct-messages' 
-                    socketUrl="/api/socket/direct-messages" 
+                    socketUrl="/api/direct-messages" 
                     paramKey='conversationId' 
                     paramValue={conversation.id} 
                     socketQuery={{conversationId : conversation.id}}/>
