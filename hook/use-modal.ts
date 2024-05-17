@@ -4,7 +4,7 @@ import { ChannelType } from "@/model/ChannelType";
 import { Server } from "@/model/Server";
 import { create } from "zustand";
 
-export type ModalType = "createServer" | "invite" | "editServer" | "members" | "createChannel" | "leaveServer" | "deleteServer" | "deleteChannel" | "editChannel" | "messageFile" | "deleteMessage";
+export type ModalType = "createServer" | "invite" | "editServer" | "members" | "createChannel" | "leaveServer" | "deleteServer" | "deleteChannel" | "editChannel" | "messageFile" | "deleteMessage" | "editProfile" | "changePassword";
 
 
 // Data nhan vao cua modal

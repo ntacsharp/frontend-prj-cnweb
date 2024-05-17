@@ -5,7 +5,7 @@ export const getOrCreateConversation = async (memberOneId, memberTwoId,token) =>
         Authorization: `Bearer ${token}`,
     };
 
-   const data = await apiClient.get(`api/conversation?memberOneId=${memberOneId}&memberTwoId=/${memberTwoId}`,{headers: headers})
+   const response = await apiClient.get(`api/conversation?memberOneId=${memberOneId}&memberTwoId=${memberTwoId}`,{headers: headers})
 
-   return data.data
+   return response.data
 }

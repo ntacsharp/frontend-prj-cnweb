@@ -22,4 +22,26 @@ export const login = async (email,password, provider) => {
     return apiClient.post(`/api/user/login`, payload);
 }
 
-    
+export const updateUserProfile = async(values,token) => {
+    const payload = {
+        name : values.displayName,
+        imageUrl: values.avatarUrl
+    };
+    const headers = {
+        Authorization: `Bearer ${token}`,
+    };
+    return apiClient.patch(`/api/profile`, payload,{headers:headers});
+}
+   
+
+
+export const changePassword = async(values,token) => {
+    const payload = {
+        currentPassword : values.currentPassword,
+        newPassword: values.newPassword
+    };
+    const headers = {
+        Authorization: `Bearer ${token}`,
+    };
+    return apiClient.patch(`/api/user/changePassword`, payload,{headers:headers});
+}

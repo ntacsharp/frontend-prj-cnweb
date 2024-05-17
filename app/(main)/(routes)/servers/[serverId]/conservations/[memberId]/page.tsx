@@ -1,8 +1,12 @@
+'use client'
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import ChatHeader from "@/components/chat/chatheader";
-import { redirect } from "next/navigation";
 import { getOrCreateConversation } from '@/app/api/ConservationApi';
 import { getCurrentMember } from "@/app/api/MemberApi";
-
+import { getProfileById } from '@/app/api/ProfileApi';
+import { ChatMessages } from '@/components/chat/chat-message';
+import ChatInput from '@/components/chat/chat-input';
 
 interface MemberIdPageProps {
   params: {
@@ -14,52 +18,80 @@ interface MemberIdPageProps {
   }
 }
 
-const MemberIdPage = async ({
-  params,
-  searchParams,
-}: MemberIdPageProps) => {
-  
-  const profile = 
-  {
-    id: "1",
-    name: "John Doe",
-    imageUrl: "https://randomuser.me/api/port"
+const MemberIdPage = ({ params, searchParams }: MemberIdPageProps) => {
+  const router = useRouter();
+  const [profile, setProfile] = useState(null);
+  const [currentMember, setCurrentMember] = useState(null);
+  const [conversation, setConversation] = useState<any>();
+  const [otherMember, setOtherMember] = useState<any>();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const token = sessionStorage.getItem('token');
+      
+      if (!token) {
+        router.push("/login");
+        return;
+      }
+
+      const fetchedProfile = await getProfileById(token);
+      if (!fetchedProfile) {
+        router.push("/login");
+        return;
+      }
+      setProfile(fetchedProfile.data);
+    
+      const fetchedCurrentMember = await getCurrentMember(params.serverId, token);
+      if (!fetchedCurrentMember) {
+        router.push("/");
+        return;
+      }
+      setCurrentMember(fetchedCurrentMember);
+      console.log("b")
+      console.log(fetchedCurrentMember)
+      const fetchedConversation = await getOrCreateConversation(fetchedCurrentMember.id, params.memberId, token);
+      if (!fetchedConversation) {
+        router.push(`/servers/${params.serverId}`);
+        return;
+      }
+      setConversation(fetchedConversation);
+      console.log("c")
+      const { memberOne, memberTwo } = fetchedConversation;
+      setOtherMember(memberOne.profileId === fetchedProfile.data.id ? memberTwo : memberOne);
+      console.log("d")
+    };
+
+    fetchData();
+  }, [params.memberId, params.serverId, router]);
+
+  if (!profile || !currentMember || !conversation || !otherMember) {
+    return <div>Loading...</div>;
   }
+  // Chua co api
 
-  if (!profile) {
-    return redirect("/login");
-  }
-
-  const currentMember = await getCurrentMember(params.serverId,process.env.NEXT_PUBLIC_TOKEN);
-
-  if (!currentMember) {
-    return redirect("/");
-  }
-
-  const conversation = await getOrCreateConversation(currentMember.id, params.memberId,process.env.NEXT_PUBLIC_TOKEN);
-
-  if (!conversation) {
-    return redirect(`/servers/${params.serverId}`);
-  }
-
-  const { memberOne, memberTwo } = conversation;
-
-  const otherMember = memberOne.profileId === profile.id ? memberTwo : memberOne;
-
-
-const MemberIdPage = () =>{
-    return (
-      <div className="bg-white dark:bg-[#313338] flex flex-col h-full">
+  return (
+    <div className="bg-white dark:bg-[#313338] flex flex-col h-full">
       <ChatHeader
         imageUrl={otherMember.profile.imageUrl}
         name={otherMember.profile.name}
         serverId={params.serverId}
         type="conversation"
       />
-      </div>
-      )
-}
-}
+      <ChatMessages member={currentMember} 
+                    name={otherMember.profile.name} 
+                    chatId={conversation.id} 
+                    type='conversation' 
+                    apiUrl='http://localhost:4869/api/direct-messages' 
+                    socketUrl="/api/socket/direct-messages" 
+                    paramKey='conversationId' 
+                    paramValue={conversation.id} 
+                    socketQuery={{conversationId : conversation.id}}/>
+      <ChatInput name={otherMember.profile.name}
+                type='conversation'
+                apiUrl='http://localhost:4869/api/direct-messages' 
+                query={{conversationId:conversation.id}}/>
+    </div>
+  );
+};
 
 export default MemberIdPage;
-
