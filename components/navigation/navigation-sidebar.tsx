@@ -11,6 +11,7 @@ import DirectMessageAction from "./direct-message-action";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import { UserAvatar } from "../UserAvatar";
+import { ManageAccountButton } from "../manage-account-button";
 
 export const NavigationSidebar = () => {
     const [servers, setServers] = useState([]);
