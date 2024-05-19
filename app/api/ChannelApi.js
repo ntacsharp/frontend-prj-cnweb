@@ -12,11 +12,11 @@ export const createChannel = (values, serverId ,token) => {
     return apiClient.post(`/api/channel?serverId=${serverId}`, payload, {headers});
 }
 
-export const deleteChannel = (channelId, token) => {
+export const deleteChannel = (serverId,channelId, token) => {
     const headers = {
         Authorization: `Bearer ${token}`,
     };
-    return apiClient.delete(`/api/channel/${channelId}`,{headers: headers})
+    return apiClient.delete(`/api/channel/${channelId}?serverId=${serverId}`,{headers: headers})
 }
 export const updateChannel = async (values,channelId ,serverId, token) => {
     const payload = {
