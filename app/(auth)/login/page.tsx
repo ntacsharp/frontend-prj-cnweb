@@ -1,7 +1,7 @@
 "use client"
 
 import React, { FormEvent, useEffect, useState } from 'react';
-import { getSession, signIn } from 'next-auth/react';
+import { getSession, signIn, signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { redirect, useRouter } from 'next/navigation';
 import { login } from "@/app/api/UserApi"
@@ -17,8 +17,6 @@ const Login = () => {
             .then(response => {
                 const token = response.data.token;
                 if (typeof window !== 'undefined') sessionStorage.setItem('token', token);
-                
-                console.log('Login success:', response);
                 router.push('/servers/1');
             })
             .catch(error => {
@@ -33,16 +31,20 @@ const Login = () => {
     useEffect(() => {
         const fetchData = async () => {
             const session = await getSession();
-            if (session) {
-                login(session.user?.email, "", "google")
-                    .then(response => {
+            const email = session?.user?.email;
+            if (email) {
+                await login(email, "", "google")
+                    .then((response) => {
                         const token = response.data.token;
                         if (typeof window !== 'undefined') sessionStorage.setItem('token', token);
+                        
                         redirect(`/servers/1`);
                     })
                     .catch(error => {
                         console.error('Login failed:', error);
                     });
+                console.log(session.user);
+                await signOut();
             }
         };
         fetchData();
