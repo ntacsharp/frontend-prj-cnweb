@@ -32,7 +32,7 @@ export const DeleteChannelModal = () => {
         console.log(channel?.id);
         setIsLoading(true);
         // call api từ back end 
-        // await deleteChannel(server?.id,channel?id,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9maWxlSWQiOiIyIiwiaWF0IjoxNzEzNDk4NTIwLCJleHAiOjE3MTM3MTQ1MjB9.3Mkm6n9BMXJcJyWsHeX23JlBRu15eFHbk-BwUOmUa_w');
+        await deleteChannel(server?.id,channel?.id,window.sessionStorage.getItem('token'));
         onClose();
         router.refresh();
     }
