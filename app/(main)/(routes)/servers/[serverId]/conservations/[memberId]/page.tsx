@@ -7,6 +7,7 @@ import { getCurrentMember } from "@/app/api/MemberApi";
 import { getProfileById } from '@/app/api/ProfileApi';
 import { ChatMessages } from '@/components/chat/chat-message';
 import ChatInput from '@/components/chat/chat-input';
+import { MediaRoom } from '@/components/media-room';
 
 interface MemberIdPageProps {
   params: {
@@ -28,7 +29,7 @@ const MemberIdPage = ({ params, searchParams }: MemberIdPageProps) => {
   useEffect(() => {
     const fetchData = async () => {
       const token = sessionStorage.getItem('token');
-      
+
       if (!token) {
         router.push("/login");
         return;
@@ -40,14 +41,13 @@ const MemberIdPage = ({ params, searchParams }: MemberIdPageProps) => {
         return;
       }
       setProfile(fetchedProfile.data);
-    
+
       const fetchedCurrentMember = await getCurrentMember(params.serverId, token);
       if (!fetchedCurrentMember) {
         router.push("/");
         return;
       }
       setCurrentMember(fetchedCurrentMember);
-      console.log("b")
       console.log(fetchedCurrentMember)
       const fetchedConversation = await getOrCreateConversation(fetchedCurrentMember.id, params.memberId, token);
       if (!fetchedConversation) {
@@ -55,10 +55,8 @@ const MemberIdPage = ({ params, searchParams }: MemberIdPageProps) => {
         return;
       }
       setConversation(fetchedConversation);
-      console.log("c")
       const { memberOne, memberTwo } = fetchedConversation;
       setOtherMember(memberOne.profileId === fetchedProfile.data.id ? memberTwo : memberOne);
-      console.log("d")
     };
 
     fetchData();
@@ -77,19 +75,30 @@ const MemberIdPage = ({ params, searchParams }: MemberIdPageProps) => {
         serverId={params.serverId}
         type="conversation"
       />
-      <ChatMessages member={currentMember} 
-                    name={otherMember.profile.name} 
-                    chatId={conversation.id} 
-                    type='conversation' 
-                    apiUrl='http://localhost:4869/api/direct-messages' 
-                    socketUrl="/api/socket/direct-messages" 
-                    paramKey='conversationId' 
-                    paramValue={conversation.id} 
-                    socketQuery={{conversationId : conversation.id}}/>
-      <ChatInput name={otherMember.profile.name}
-                type='conversation'
-                apiUrl='http://localhost:4869/api/direct-messages' 
-                query={{conversationId:conversation.id}}/>
+      {searchParams.video && (
+        <MediaRoom
+          chatId={conversation.id}
+          video={true}
+          audio={true}
+        />
+      )}
+      {!searchParams.video && (
+        <>
+          <ChatMessages member={currentMember}
+            name={otherMember.profile.name}
+            chatId={conversation.id}
+            type='conversation'
+            apiUrl='http://localhost:4869/api/direct-messages'
+            socketUrl="/api/socket/direct-messages"
+            paramKey='conversationId'
+            paramValue={conversation.id}
+            socketQuery={{ conversationId: conversation.id }} />
+          <ChatInput name={otherMember.profile.name}
+            type='conversation'
+            apiUrl='http://localhost:4869/api/direct-messages'
+            query={{ conversationId: conversation.id }} />
+        </>
+      )}
     </div>
   );
 };
