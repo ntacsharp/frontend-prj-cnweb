@@ -1,5 +1,6 @@
 import { Hash, Menu } from "lucide-react"
 import { MobileToggle } from "../responsive"
+import { ChatVideoButton } from "./chat-video-button"
 
 interface header_props {
     name:string,
@@ -23,6 +24,11 @@ const ChatHeader =  ({serverId,name,type,imageUrl}:header_props) =>{
       {
         //todo: direct message video call
       }
+      <div className="ml-auto flex items-center">
+        {type === "conversation" && (
+          <ChatVideoButton />
+        )}
+      </div>
     </div>
   )
 }

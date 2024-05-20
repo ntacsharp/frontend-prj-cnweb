@@ -5,23 +5,24 @@ import ServerSidebar from "@/components/server/server-sidebar";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const ServerIdLayout = async ({ children, params, }: { children: React.ReactNode, params: { serverId: string } }) => {
+const ServerIdLayout = ({ children, params, }: { children: React.ReactNode, params: { serverId: string } }) => {
     const [server, setServer] = useState();
     // Khi co authen voi id thi se xu li kiem tra sau
 
     // const server = await getServerById(params.serverId, token)
     useEffect(() => {
-        const fecthData = async () => {
+        const fetchData = () => {
             const token = sessionStorage.getItem('token');
             if (!token) {
                 redirect("/login");
             } else {
-                const response = await getServerById(params.serverId, token)
+                const response = getServerById(params.serverId, token)
                     .then((res) => {
                         console.log(res);
                     })
             }
-        }
+        };
+        fetchData();
     }, [])
 
     return (
