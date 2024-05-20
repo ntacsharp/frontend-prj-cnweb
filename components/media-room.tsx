@@ -6,6 +6,7 @@ import { Channel } from "@/model/Channel";
 // import { useUser } 
 import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { getProfileById } from "@/app/api/ProfileApi";
 
 interface MediaRoomProps {
     chatId: string;
@@ -23,13 +24,11 @@ export const MediaRoom = ({
     const [token, setToken] = useState("");
 
     useEffect(() => {
-        // if(!user?.firstName || !user?.lastName) return;
-
-        // const name = `${user.firstName} ${user.lastName}`;
-        const name = `xdd`;
         (async () => {
             try {
-                const resp = await fetch(`/api/livekit?room=${chatId}&username=${name}`);
+                const accessToken = sessionStorage.getItem('token');
+                const user = await getProfileById(accessToken);
+                const resp = await fetch(`/api/livekit?room=${chatId}&username=${user.data.name}`);
                 const data = await resp.json();
                 setToken(data.token);
             } catch (e) {

@@ -78,8 +78,8 @@ export const CreateChannelModal = () => {
             const response = await createChannel(values,serverId, window.sessionStorage.getItem('token'));
             const id = response.data.id;
             form.reset();
-            router.refresh();
             onClose();
+            window.location.reload();
         }
         catch (error) {
             console.log(error);

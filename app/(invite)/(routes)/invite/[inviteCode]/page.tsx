@@ -1,5 +1,6 @@
 "use client"
 import { joinServer } from '@/app/api/ServerApi';
+import { Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
 
@@ -28,7 +29,6 @@ const InviteCodePage = ({
             
             try {
                 const resp = await joinServer(params.inviteCode, token);
-                console.log(resp);
 
                 if (resp) {
                     router.push(`/servers/${resp.data.id}`);
@@ -43,10 +43,13 @@ const InviteCodePage = ({
     }, []); // Add params.inviteCode as dependency
 
     return (
-        <div>
-            xdd
+        <div className="flex flex-col flex-1 justify-center items-center">
+            <Loader2 className="h-7 w-7 text-zinc-500 animate-spin my-4"/>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400">
+                Đang tải...
+            </p>
         </div>
-    );
+    )
 };
 
 export default InviteCodePage;
