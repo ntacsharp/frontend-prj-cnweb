@@ -49,7 +49,7 @@ export const CreateServerModal = () =>{
             const response = await createServer(values, token)
             const id = response.data.id;
             form.reset();
-            router.refresh();
+            window.location.reload();
             router.push(`/servers/${id}`);
         }
         catch (error) {
