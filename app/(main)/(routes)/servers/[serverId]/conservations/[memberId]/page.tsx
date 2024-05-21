@@ -48,12 +48,12 @@ const MemberIdPage = ({ params, searchParams }: MemberIdPageProps) => {
         return;
       }
       setCurrentMember(fetchedCurrentMember);
-      console.log(fetchedCurrentMember)
       const fetchedConversation = await getOrCreateConversation(fetchedCurrentMember.id, params.memberId, token);
       if (!fetchedConversation) {
         router.push(`/servers/${params.serverId}`);
         return;
       }
+      console.log(fetchedConversation);
       setConversation(fetchedConversation);
       const { memberOne, memberTwo } = fetchedConversation;
       setOtherMember(memberOne.profileId === fetchedProfile.data.id ? memberTwo : memberOne);
