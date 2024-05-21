@@ -45,9 +45,13 @@ export const ChangePasswordModal = () => {
             throw new Error('Authentication token is missing');
         }
         try {
-            await changePassword({ currentPassword: values.currentPassword, newPassword: values.newPassword },token);
+            const response = await changePassword({ currentPassword: values.currentPassword, newPassword: values.newPassword },token);
+            console.log(response)
             form.reset();
-            router.refresh();
+            if(response.status === 200 && response.config.method === "put"){
+                window.sessionStorage.clear();
+            }
+            location.reload()
             onClose();
         } catch (error) {
             console.log(error);
