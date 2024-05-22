@@ -23,8 +23,8 @@ export const ourFileRouter = {
       return { userId: user.id };
     })
     .onUploadComplete(async ({ metadata, file }) => {
-      console.log("Upload complete for userId:", metadata.userId);
-      console.log("file url", file.url);
+      // console.log("Upload complete for userId:", metadata.userId);
+      // console.log("file url", file.url);
  
       // Hàm xử lí log thông tin và trả về userId
       return { uploadedBy: metadata.userId };

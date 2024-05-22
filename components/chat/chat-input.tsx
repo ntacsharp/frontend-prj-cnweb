@@ -54,13 +54,12 @@ const ChatInput = ({
                 url: apiUrl,
                 query
             });
-            console.log(value);
             const response = await sendMessage(token, url, value);
             form.reset();
             router.refresh();
         }
         catch (error) {
-            console.log(error);
+            console.error(error);
         }
     }
 
