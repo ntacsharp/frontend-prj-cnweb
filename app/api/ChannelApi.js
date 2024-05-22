@@ -26,8 +26,6 @@ export const updateChannel = async (values,channelId ,serverId, token) => {
     const headers = {
         Authorization: `Bearer ${token}`,
     };
-
-    console.log(payload);
     return apiClient.put(`/api/channel/${channelId}?serverId=${serverId}`, payload,{ headers: headers });
 }
 export const getChannelById = async (channelId, token) => {

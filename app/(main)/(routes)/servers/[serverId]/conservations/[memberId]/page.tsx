@@ -53,7 +53,6 @@ const MemberIdPage = ({ params, searchParams }: MemberIdPageProps) => {
         router.push(`/servers/${params.serverId}`);
         return;
       }
-      console.log(fetchedConversation);
       setConversation(fetchedConversation);
       const { memberOne, memberTwo } = fetchedConversation;
       setOtherMember(memberOne.profileId === fetchedProfile.data.id ? memberTwo : memberOne);

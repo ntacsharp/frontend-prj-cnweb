@@ -24,32 +24,6 @@ const Login = () => {
             });
     }
 
-    function handleSignInWithGoogle() {
-        signIn("google");
-    }
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const session = await getSession();
-            const email = session?.user?.email;
-            if (email) {
-                await login(email, "", "google")
-                    .then((response) => {
-                        const token = response.data.token;
-                        if (typeof window !== 'undefined') sessionStorage.setItem('token', token);
-                        
-                        redirect(`/servers/1`);
-                    })
-                    .catch(error => {
-                        console.error('Login failed:', error);
-                    });
-                console.log(session.user);
-                await signOut();
-            }
-        };
-        fetchData();
-    }, []);
-
     return (
         <div className='mx-auto h-screen flex flex-col justify-center items-center'>
             <div className='bg-gray-800 mx-auto w-[480px] p-8 rounded-lg'>
@@ -57,7 +31,6 @@ const Login = () => {
                     <h4 className="text-2xl font-bold">Chào mừng đến Conserva.</h4>
                     <hr className="my-4 border-t border-gray-300" />
                 </div>
-                <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg mb-4" onClick={handleSignInWithGoogle}>Sign in with Google</button>
                 <form onSubmit={handleSubmit} className='flex flex-col w-full'>
                     <label htmlFor='email' className='text-white'>Email</label>
                     <input id='email' type='text' className='bg-gray-700 text-white border-b-2 border-gray-500 focus:outline-none focus:border-blue-500 py-2 px-3 rounded-lg mb-4' onChange={(e) => setEmail(e.target.value)} />

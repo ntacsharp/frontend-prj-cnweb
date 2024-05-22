@@ -15,12 +15,12 @@ const ServerIdLayout = ({ children, params, }: { children: React.ReactNode, para
             const token = sessionStorage.getItem('token');
             if (!token) {
                 redirect("/login");
-            } else {
-                const response = await getServerById(params.serverId, token)
-                    .then((res) => {
-                        console.log(res);
-                    })
             }
+            //  else {
+                // const response = await getServerById(params.serverId, token)
+                //     .then((res) => {
+                //     })
+            // }
         };
         fetchData();
     }, [])

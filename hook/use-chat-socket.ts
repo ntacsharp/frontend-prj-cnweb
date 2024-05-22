@@ -6,6 +6,7 @@ import { useSocket } from "@/components/providers/socket-provider";
 import { Message } from "@/model/Message";
 import { Member } from "@/model/Member";
 import { Profile } from "@/model/Profile";
+import { sendNotification } from "@/app/api/notification/sendNotification";
 
 type ChatSocketProps = {
   addKey: string;
@@ -31,6 +32,7 @@ export const useChatSocket = ({
     if (!socket) {
       return;
     }
+    const id = sessionStorage.getItem('profileId');
 
     socket.on(updateKey, (message: MessageWithMemberWithProfile) => {
       queryClient.setQueryData([queryKey], (oldData: any) => {
@@ -68,6 +70,10 @@ export const useChatSocket = ({
         }
 
         const newData = [...oldData.pages];
+
+        if(id != null){
+          sendNotification(message.member.profile.name, message.content);
+        }
 
         newData[0] = {
           ...newData[0],
