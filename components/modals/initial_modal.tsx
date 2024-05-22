@@ -48,7 +48,6 @@ export const InitialModal = () =>{
 
     const onSubmit = async (values: z.infer<typeof formSchema>) =>{
         try {
-            console.log(values);
             const token = sessionStorage.getItem('token');
             if(!token) redirect("/login");
             await createServer(values, token);

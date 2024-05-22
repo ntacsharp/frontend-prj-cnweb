@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-const SetupPage = async () =>{
+const SetupPage = () =>{
   const isLogin = true;
   if(isLogin){
     return redirect(`/servers/1`)

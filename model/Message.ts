@@ -10,5 +10,4 @@ export class Message {
             this.createdAt = createdAt;
             this.updatedAt = updatedAt;
         }
-    
 }

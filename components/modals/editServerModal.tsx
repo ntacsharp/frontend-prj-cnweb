@@ -54,7 +54,6 @@ export const EditServerModal = () => {
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            console.log(values);
             const token = sessionStorage.getItem('token');
             if(!token) redirect("/login");
             const response = await updateServer(values, server?.id, token)

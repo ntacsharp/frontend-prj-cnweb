@@ -10,7 +10,6 @@ export const createServer = (values, token) => {
         Authorization: `Bearer ${token}`,
     };
 
-    console.log(payload);
     return apiClient.post(`/api/server`, payload,{ headers: headers });
 };
 
@@ -66,6 +65,5 @@ export const updateServer = async (values, serverId, token) => {
         Authorization: `Bearer ${token}`,
     };
 
-    console.log(payload);
     return apiClient.patch(`/api/server/${serverId}`, payload,{ headers: headers });
 }

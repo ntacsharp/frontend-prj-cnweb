@@ -73,7 +73,6 @@ export const EditChannelModal = () => {
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            console.log(values);
 
             await updateChannel(values,channel?.id,serverId ,window.sessionStorage.getItem('token'));
             form.reset();

@@ -28,9 +28,6 @@ const Login = () => {
             });
     }
 
-    function handleSignInWithGoogle() {
-        signIn("google");
-    }
 
     useEffect(() => {
         const fetchData = async () => {
