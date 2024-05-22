@@ -36,7 +36,6 @@ const Register = () => {
 
         try {
             const response = await signUp(username,email,password,displayName)
-            console.log(response.data);
             setShowModal(true);
             // Xử lý thành công
         } catch (error) {

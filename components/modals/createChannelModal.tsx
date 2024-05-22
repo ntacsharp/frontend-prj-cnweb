@@ -73,7 +73,6 @@ export const CreateChannelModal = () => {
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            console.log(values);
 
             const response = await createChannel(values,serverId, window.sessionStorage.getItem('token'));
             const id = response.data.id;
@@ -82,7 +81,7 @@ export const CreateChannelModal = () => {
             window.location.reload();
         }
         catch (error) {
-            console.log(error);
+            console.error(error);
         }
     };
 

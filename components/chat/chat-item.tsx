@@ -94,7 +94,7 @@ export const ChatItem = ({
       form.reset();
       setIsEditing(false);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 

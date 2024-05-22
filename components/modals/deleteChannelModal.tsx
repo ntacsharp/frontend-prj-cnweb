@@ -29,7 +29,6 @@ export const DeleteChannelModal = () => {
 
   const DeleteChannel = async () =>{
     try {
-        console.log(channel?.id);
         setIsLoading(true);
         // call api từ back end 
         await deleteChannel(server?.id,channel?.id,window.sessionStorage.getItem('token'));
@@ -38,7 +37,7 @@ export const DeleteChannelModal = () => {
         window.location.reload();
     }
     catch (error) {
-        console.log(error);
+        console.error(error);
     }
     finally {
         setIsLoading(false);

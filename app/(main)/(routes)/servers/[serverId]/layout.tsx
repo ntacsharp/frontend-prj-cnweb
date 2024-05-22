@@ -15,12 +15,20 @@ const ServerIdLayout = ({ children, params, }: { children: React.ReactNode, para
             const token = sessionStorage.getItem('token');
             if (!token) {
                 redirect("/login");
+<<<<<<< HEAD
             } else {
                 const response = getServerById(params.serverId, token)
                     .then((res) => {
                         console.log(res);
                     })
+=======
+>>>>>>> origin/Tuấn-Anh
             }
+            //  else {
+                // const response = await getServerById(params.serverId, token)
+                //     .then((res) => {
+                //     })
+            // }
         };
         fetchData();
     }, [])

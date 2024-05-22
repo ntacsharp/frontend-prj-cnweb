@@ -34,7 +34,6 @@ export const useChatQuery = ({
         Authorization: `Bearer ${window.sessionStorage.getItem("token")}`,
       }
     });
-    console.log(res);
     return res.data;
   };
 

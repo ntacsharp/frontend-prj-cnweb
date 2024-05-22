@@ -43,7 +43,6 @@ export const CreateServerModal = () =>{
 
     const onSubmit = async (values: z.infer<typeof formSchema>) =>{
         try {
-            console.log(values);
             const token = sessionStorage.getItem('token');
             if(!token) redirect("/login");
             const response = await createServer(values, token)
@@ -53,7 +52,7 @@ export const CreateServerModal = () =>{
             router.push(`/servers/${id}`);
         }
         catch (error) {
-            console.log(error);
+            console.error(error);
         }
     };
 
