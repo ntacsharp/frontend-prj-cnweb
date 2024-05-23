@@ -6,7 +6,7 @@ import Image from "next/image";
 interface FileUploadProps {
     onChange: (url?: string) => void;
     value: string;
-    endpoint: "messageFile" | "serverImageUploader" | "avatarImageUploader";
+    endpoint: "messageFile" | "serverImageUploader" ;
 }
 
 export const FileUpload = ({
@@ -54,6 +54,8 @@ export const FileUpload = ({
             </div>
         )
     }
+
+       
 
     return (
         <UploadDropzone

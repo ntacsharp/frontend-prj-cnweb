@@ -26,6 +26,11 @@ const MemberIdPage = ({ params, searchParams }: MemberIdPageProps) => {
   const [conversation, setConversation] = useState<any>();
   const [otherMember, setOtherMember] = useState<any>();
 
+  const baseUrl = process.env.BASE_URL;
+
+  const apiUrl = `${baseUrl}:4869/api/direct-messages`;
+
+
   useEffect(() => {
     const fetchData = async () => {
       const token = sessionStorage.getItem('token');
@@ -56,6 +61,8 @@ const MemberIdPage = ({ params, searchParams }: MemberIdPageProps) => {
       setConversation(fetchedConversation);
       const { memberOne, memberTwo } = fetchedConversation;
       setOtherMember(memberOne.profileId === fetchedProfile.data.id ? memberTwo : memberOne);
+
+
     };
 
     fetchData();
@@ -87,14 +94,14 @@ const MemberIdPage = ({ params, searchParams }: MemberIdPageProps) => {
             name={otherMember.profile.name}
             chatId={conversation.id}
             type='conversation'
-            apiUrl='http://localhost:4869/api/direct-messages'
+            apiUrl={apiUrl}
             socketUrl="/api/socket/direct-messages"
             paramKey='conversationId'
             paramValue={conversation.id}
             socketQuery={{ conversationId: conversation.id }} />
           <ChatInput name={otherMember.profile.name}
             type='conversation'
-            apiUrl='http://localhost:4869/api/direct-messages'
+            apiUrl={apiUrl}
             query={{ conversationId: conversation.id }} />
         </>
       )}

@@ -25,4 +25,6 @@ export const MobileToggle = React.memo(({ serverID }: { serverID: string }) => {
     );
 });
 
+MobileToggle.displayName = 'MobileToggle';
+
 export default MobileToggle;

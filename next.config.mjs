@@ -8,7 +8,7 @@ const nextConfig = {
     },
     reactStrictMode:true,
     env: {
-      BASE_URL: process.env.NEXT_PUBLIC_TOKEN,
+      BASE_URL: process.env.BASE_URL,
     },
 };
 
