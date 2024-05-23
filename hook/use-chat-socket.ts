@@ -35,6 +35,7 @@ export const useChatSocket = ({
     const id = sessionStorage.getItem('profileId');
 
     socket.on(updateKey, (message: MessageWithMemberWithProfile) => {
+      
       queryClient.setQueryData([queryKey], (oldData: any) => {
         if (!oldData || !oldData.pages || oldData.pages.length === 0) {
           return oldData;

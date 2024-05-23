@@ -1,7 +1,10 @@
-import axios from 'axios'
+import axios from 'axios';
 
-export const apiClient = axios.create(
-    {
-        baseURL: 'http://localhost:4869'
-    }
-);
+const baseURL = process.env.BASE_URL || 'http://localhost';
+
+
+console.log('baseURL:', baseURL);
+
+export const apiClient = axios.create({
+  baseURL: `${baseURL}:4869`
+});

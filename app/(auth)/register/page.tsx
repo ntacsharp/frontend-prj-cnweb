@@ -1,9 +1,7 @@
 "use client"
-import Link from 'next/link';
 import React, { useState } from 'react';
 import {signUp} from '@/app/api/UserApi';
 import { useRouter } from 'next/navigation';
-import { createProfile } from '@/app/api/ProfileApi';
 
 const Register = () => {
     const [username, setUsername] = useState("");

@@ -83,7 +83,7 @@ export const EditProfileModal = () => {
                                         <FormItem>
                                             <FormControl>
                                                 <FileUpload
-                                                    endpoint="avatarImageUploader"
+                                                    endpoint="serverImageUploader"
                                                     value={field.value}
                                                     onChange={field.onChange}
                                                 />

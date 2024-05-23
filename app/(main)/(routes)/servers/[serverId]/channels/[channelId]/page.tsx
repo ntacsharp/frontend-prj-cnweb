@@ -20,6 +20,12 @@ const ChannelIdPage = () => {
 
     const [channel, setChannel] = useState<Channel>({} as Channel);
 
+    const baseUrl = process.env.BASE_URL;
+
+    const apiUrl = `${baseUrl}:4869/api/messages`;
+
+    const socketUrl = `${baseUrl}/api/socket/messages`;
+
 
 
     useEffect(() => {
@@ -57,8 +63,8 @@ const ChannelIdPage = () => {
                             name={channel.name}
                             chatId={channel.id}
                             type="channel"
-                            apiUrl="http://localhost:4869/api/messages"
-                            socketUrl="/api/socket/messages"
+                            apiUrl={apiUrl}
+                            socketUrl={socketUrl}
                             socketQuery={{
                                 channelId: channel.id,
                                 serverId: channel.serverId,
@@ -66,7 +72,7 @@ const ChannelIdPage = () => {
                             paramKey="channelId"
                             paramValue={channel.id}
                         />
-                        <ChatInput name={channelName} type="channel" apiUrl="http://localhost:4869/api/messages" query={{
+                        <ChatInput name={channelName} type="channel" apiUrl={apiUrl} query={{
                             channelId: params?.channelId,
                             serverId: serverId
                         }} />
