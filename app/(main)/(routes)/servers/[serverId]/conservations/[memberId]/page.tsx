@@ -26,7 +26,7 @@ const MemberIdPage = ({ params, searchParams }: MemberIdPageProps) => {
   const [conversation, setConversation] = useState<any>();
   const [otherMember, setOtherMember] = useState<any>();
 
-  const baseUrl = process.env.BASE_URL;
+  const baseUrl = process.env.BASE_URL || "http://localhost";
 
   const apiUrl = `${baseUrl}:4869/api/direct-messages`;
 

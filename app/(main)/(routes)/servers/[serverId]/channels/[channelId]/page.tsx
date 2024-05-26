@@ -20,7 +20,7 @@ const ChannelIdPage = () => {
 
     const [channel, setChannel] = useState<Channel>({} as Channel);
 
-    const baseUrl = process.env.BASE_URL;
+    const baseUrl = process.env.BASE_URL || "http://localhost";
 
     const apiUrl = `${baseUrl}:4869/api/messages`;
 

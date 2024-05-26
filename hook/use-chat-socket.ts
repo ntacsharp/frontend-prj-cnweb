@@ -35,6 +35,11 @@ export const useChatSocket = ({
     const id = sessionStorage.getItem('profileId');
 
     socket.on(updateKey, (message: MessageWithMemberWithProfile) => {
+      const messagesList = document.getElementById('messagesList');
+      console.log(messagesList);
+      if (messagesList) {
+          messagesList.scrollTo(0, messagesList.scrollHeight);
+      }
       
       queryClient.setQueryData([queryKey], (oldData: any) => {
         if (!oldData || !oldData.pages || oldData.pages.length === 0) {
@@ -61,6 +66,7 @@ export const useChatSocket = ({
     });
 
     socket.on(addKey, (message: MessageWithMemberWithProfile) => {
+
       queryClient.setQueryData([queryKey], (oldData: any) => {
         if (!oldData || !oldData.pages || oldData.pages.length === 0) {
           return {
