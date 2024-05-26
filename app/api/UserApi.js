@@ -30,18 +30,18 @@ export const updateUserProfile = async(values,token) => {
     const headers = {
         Authorization: `Bearer ${token}`,
     };
-    return apiClient.patch(`/api/profile`, payload,{headers:headers});
+    return apiClient.put(`/api/profile`, payload,{headers:headers});
 }
    
 
 
 export const changePassword = async(values,token) => {
     const payload = {
-        currentPassword : values.currentPassword,
+        oldPassword : values.currentPassword,
         newPassword: values.newPassword
     };
     const headers = {
         Authorization: `Bearer ${token}`,
     };
-    return apiClient.patch(`/api/user/changePassword`, payload,{headers:headers});
+    return apiClient.put(`/api/user/change-password`, payload,{headers:headers});
 }
