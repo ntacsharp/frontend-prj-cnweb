@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 
-
 import { useSocket } from "@/components/providers/socket-provider";
 import { Message } from "@/model/Message";
 import { Member } from "@/model/Member";
@@ -35,12 +34,6 @@ export const useChatSocket = ({
     const id = sessionStorage.getItem('profileId');
 
     socket.on(updateKey, (message: MessageWithMemberWithProfile) => {
-      const messagesList = document.getElementById('messagesList');
-      console.log(messagesList);
-      if (messagesList) {
-          messagesList.scrollTo(0, messagesList.scrollHeight);
-      }
-      
       queryClient.setQueryData([queryKey], (oldData: any) => {
         if (!oldData || !oldData.pages || oldData.pages.length === 0) {
           return oldData;
@@ -62,11 +55,11 @@ export const useChatSocket = ({
           ...oldData,
           pages: newData,
         }
-      })
+      });
+
     });
 
     socket.on(addKey, (message: MessageWithMemberWithProfile) => {
-
       queryClient.setQueryData([queryKey], (oldData: any) => {
         if (!oldData || !oldData.pages || oldData.pages.length === 0) {
           return {
@@ -78,7 +71,7 @@ export const useChatSocket = ({
 
         const newData = [...oldData.pages];
 
-        if(id != null){
+        if (id != null) {
           sendNotification(message.member.profile.name, message.content);
         }
 
@@ -95,6 +88,9 @@ export const useChatSocket = ({
           pages: newData,
         };
       });
+
+      // Function to execute after setQueryData for addKey
+    
     });
 
     return () => {
@@ -102,4 +98,6 @@ export const useChatSocket = ({
       socket.off(updateKey);
     }
   }, [queryClient, addKey, queryKey, socket, updateKey]);
+
+  
 }

@@ -35,6 +35,7 @@ const Register = () => {
         try {
             const response = await signUp(username,email,password,displayName)
             setShowModal(true);
+            router.push('/info');
             // Xử lý thành công
         } catch (error) {
             console.error("Đăng ký không thành công:", error);

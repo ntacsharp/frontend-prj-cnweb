@@ -2,9 +2,9 @@
 
 import { Member } from "@/model/Member";
 import { ChatWelcome } from "./chat-welcome";
-import { useChatQuery } from "@/hook/use-chat-querry";
+import { useChatQuery } from "@/hook/use-chat-query";
 import { Loader2, ServerCrash } from "lucide-react";
-import { Fragment } from "react";
+import { Fragment, useRef } from "react";
 import { Message } from "@/model/Message";
 import { Profile } from "@/model/Profile";
 import { ChatItem } from "@/components/chat/chat-item";
@@ -39,7 +39,10 @@ export const ChatMessages = (
 ) => {
     const queryKey = `chat:${chatId}`;
     const addKey = `chat:${chatId}:messages`;
-    const updateKey = `chat:${chatId}:messages:update`
+    const updateKey = `chat:${chatId}:messages:update`;
+
+
+    const chatRef = useRef<HTMLDivElement>(null);
 
 
     const {
@@ -93,9 +96,6 @@ export const ChatMessages = (
                     {data?.pages?.map((group, i) => (
                         <Fragment key={i}>
                             {group?.items?.map((message: MessageWithMemberWithProfile) => (
-                                // <div key={message.id}>
-                                //     {message.content}
-                                // </div>
 
                                 <ChatItem
                                     key={message.id}

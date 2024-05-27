@@ -54,7 +54,7 @@ const ChatInput = ({
                 url: apiUrl,
                 query
             });
-            const response = await sendMessage(token, url, value);
+            await sendMessage(token, url, value);
             form.reset();
             router.refresh();
         }
