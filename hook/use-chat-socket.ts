@@ -71,11 +71,10 @@ export const useChatSocket = ({
 
         const newData = [...oldData.pages];
 
-        if (id != null) {
-          if (id !== message.member.profile.id) {
-          sendNotification(message.member.profile.name, message.content);
-          }
-        }
+
+
+        sendNotification(message.member.profile.name, message.content);
+
 
         newData[0] = {
           ...newData[0],
@@ -92,7 +91,7 @@ export const useChatSocket = ({
       });
 
       // Function to execute after setQueryData for addKey
-    
+
     });
 
     return () => {
@@ -101,5 +100,5 @@ export const useChatSocket = ({
     }
   }, [queryClient, addKey, queryKey, socket, updateKey]);
 
-  
+
 }
