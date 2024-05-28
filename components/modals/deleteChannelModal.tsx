@@ -34,7 +34,7 @@ export const DeleteChannelModal = () => {
         await deleteChannel(server?.id,channel?.id,window.sessionStorage.getItem('token'));
         onClose();
         console.log("Xóa kênh thành công");
-        window.location.reload();
+        window.location.href = `/servers/1`;
     }
     catch (error) {
         console.error(error);

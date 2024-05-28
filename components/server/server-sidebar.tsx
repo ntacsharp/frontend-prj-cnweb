@@ -112,7 +112,7 @@ const ServerSidebar = ({ serverId }: { serverId: string }) => {
                             type: "member",
                             data: members?.map((member: Member) => ({
                                 id: member?.id,
-                                name: member?.profileId,
+                                name: member?.profile.name,
                                 icon: roleIconMap[member.role],
                             }))
                         },

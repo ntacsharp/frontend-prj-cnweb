@@ -24,6 +24,7 @@ const ServerSearch = ({
     const router = useRouter();
     const params = useParams();
 
+
     useEffect(() => {
         const down = (e: KeyboardEvent) => {
             if (e.key === "k" && (e.metaKey || e.ctrlKey)) {

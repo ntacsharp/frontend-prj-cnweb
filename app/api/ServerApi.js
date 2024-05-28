@@ -31,7 +31,8 @@ export const leaveServer = (serverId,token) =>{
     const headers = {
         Authorization: `Bearer ${token}`,
     };
-    return apiClient.patch(`/api/server/${serverId}/leave`,{headers: headers})
+
+    return apiClient.patch(`/api/server/${serverId}/leave`,null,{headers: headers})
 
 }
 

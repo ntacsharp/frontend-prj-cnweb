@@ -25,14 +25,14 @@ const ServerHeader = ({ server, role }: { server: any, role: string | undefined}
                     <DropdownMenuItem
                         onClick={() => onOpen("invite", { server })}
                         className="text-indigo-500 dark:text-indigo-400 px-3 py-2 text-sm cursor-pointer">
-                        Invite people
+                        Mời tham gia
                         <UserPlus className="h-4 w-4 ml-auto" />
                     </DropdownMenuItem>
                 )}
                 {isModerator && (
                     <DropdownMenuItem onClick={() => onOpen("createChannel", { server })}
                         className="px-3 py-2 text-sm cursor-pointer">
-                        Create channel
+                        Tạo kênh
                         <LucidePlusCircle className="h-4 w-4 ml-auto" />
                     </DropdownMenuItem>
                 )}
@@ -42,13 +42,13 @@ const ServerHeader = ({ server, role }: { server: any, role: string | undefined}
                         <DropdownMenuItem
                             onClick={() => onOpen("editServer", { server })}
                             className="px-3 py-2 text-sm cursor-pointe">
-                            Server Settings
+                            Chỉnh sửa server
                             <Settings2 className="h-4 w-4 ml-auto" />
                         </DropdownMenuItem>
                         <DropdownMenuItem
                             onClick={() => onOpen("members", { server })}
                             className="px-3 py-2 text-sm cursor-pointer">
-                            Manage Members
+                            Quản lý thành viên
                             <Users className="h-4 w-4 ml-auto" />
                         </DropdownMenuItem>
 
@@ -61,7 +61,7 @@ const ServerHeader = ({ server, role }: { server: any, role: string | undefined}
                     <div>
                         <DropdownMenuItem onClick={() => onOpen("deleteServer", { server })}
                             className="px-3 py-2 text-sm cursor-pointer text-rose-500">
-                            Delete Server
+                            Xóa server
                             <Trash2 className="h-4 w-4 ml-auto" />
                         </DropdownMenuItem>
 
@@ -69,9 +69,9 @@ const ServerHeader = ({ server, role }: { server: any, role: string | undefined}
                 )}
                 {!isAdmin && (
                     <div>
-                        <DropdownMenuItem
+                        <DropdownMenuItem onClick={() => onOpen("leaveServer", { server })}
                             className="px-3 py-2 text-sm cursor-pointer">
-                            Leave Server
+                            Rời server
                             <LogOut className="h-4 w-4 ml-auto" />
                         </DropdownMenuItem>
 

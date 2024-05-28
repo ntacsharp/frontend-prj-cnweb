@@ -39,7 +39,7 @@ const Info = () => {
                     </svg>
                     <div className="p-6 space-y-4 md:space-y-6 sm:p-8 text-lg font-bold text-center">
                         <p>Xin chúc mừng! Bạn đã đăng ký tài khoản thành công.</p>
-                        <a className='text-violet-300 underline' href='/login'>Đăng nhập ngay</a>
+                        <a className='text-violet-300 hover:underline' href='/login'>Đăng nhập ngay</a>
                         
                     </div>
                 </div>

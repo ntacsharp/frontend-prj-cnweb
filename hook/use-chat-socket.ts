@@ -72,7 +72,9 @@ export const useChatSocket = ({
         const newData = [...oldData.pages];
 
         if (id != null) {
+          if (id !== message.member.profile.id) {
           sendNotification(message.member.profile.name, message.content);
+          }
         }
 
         newData[0] = {

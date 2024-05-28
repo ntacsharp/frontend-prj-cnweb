@@ -50,29 +50,29 @@ export const LeaveServerModal = () => {
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
-            Rời kênh
+            Rời server
           </DialogTitle>
           <DialogDescription className="text-center text-zinc-500">
-            Bạn có chắc chắn muốn rời kênh này? 
-            <span className="font-semibold text-indigo-500">{server?.name}</span>
-         </DialogDescription>
+            'Bạn có chắc chắn muốn rời server không ?' <span className="font-semibold text-indigo-500">{server?.name}</span>?
+          </DialogDescription>
         </DialogHeader>
-        
         <DialogFooter className="bg-gray-100 px-6 py-4">
-            <div className="flex items-center justify-between w-full">
-                <Button 
-                disabled={isLoading} 
-                onClick={() => {onClose}} variant="ghost">
-                    Hủy
-                </Button>
-                <Button
-                disabled={isLoading}
-                onClick={() => {}} 
-                variant="default"
-                >
-                    Rời kênh
-                </Button>
-            </div>
+          <div className="flex items-center justify-between w-full">
+            <Button
+              disabled={isLoading}
+              onClick={onClose}
+              variant="ghost"
+            >
+              Hủy
+            </Button>
+            <Button
+              disabled={isLoading}
+              variant='destructive'
+              onClick={onClick}
+            >
+              Xác nhận
+            </Button>
+          </div>
         </DialogFooter>
       </DialogContent>
     </Dialog>

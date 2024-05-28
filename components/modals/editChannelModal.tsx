@@ -76,8 +76,8 @@ export const EditChannelModal = () => {
 
             await updateChannel(values,channel?.id,serverId ,window.sessionStorage.getItem('token'));
             form.reset();
-            router.refresh();
             onClose();
+            window.location.reload();
         }
         catch (error) {
             console.log(error);
