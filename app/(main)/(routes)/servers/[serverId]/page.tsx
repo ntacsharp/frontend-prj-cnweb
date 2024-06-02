@@ -1,6 +1,7 @@
 "use client"
 
 import { getServerById } from "@/app/api/ServerApi";
+
 import { Welcome } from "@/components/welcome";
 import { useParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -9,9 +10,16 @@ const ServerIdPage = () => {
   const params = useParams();
   const [generalChannelId, setGeneralChannelId] = useState();
   const router = useRouter();
+
   useEffect(() => {
+
+    
+   
     const fetchGeneralChannelId = async () => {
       try {
+        if (params?.serverId == "1") {
+          return;
+        }
         const serverData = await getServerById(
           params?.serverId,
           window.sessionStorage.getItem("token")

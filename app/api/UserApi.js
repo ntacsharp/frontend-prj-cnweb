@@ -1,5 +1,19 @@
 import { apiClient } from './ApiClient'
 
+apiClient.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    async (error) => {
+      if(error.response.status === 403){
+         if(error.response.data.message === "Only user can access"){
+            window.location.href = '/login';
+         }
+         
+      }
+      return Promise.reject(error);
+    }
+  );
 
 export const signUp = (username, email, password, displayName) => {
 

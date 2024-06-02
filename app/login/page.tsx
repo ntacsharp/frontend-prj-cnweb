@@ -1,22 +1,24 @@
 "use client"
 
 import React, { FormEvent, useEffect, useState } from 'react';
-import { getSession, signOut } from 'next-auth/react';
 import { redirect, useRouter } from 'next/navigation';
-import { login } from "@/app/api/UserApi"
+import { login } from "@/app/api/UserApi";
+
+
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const router = useRouter();
-
+   
     function handleSubmit(e: FormEvent) {
         e.preventDefault();
         console.log(email,password);
         login(email, password, "credentials")
             .then(response => {
                 const token = response.data.token;
+               
                 if (typeof window !== 'undefined') sessionStorage.setItem('token', token);
                 router.push('/servers/1');
             })
@@ -27,28 +29,6 @@ const Login = () => {
     }
 
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const session = await getSession();
-            const email = session?.user?.email;
-            if (email) {
-                await login(email, "", "google")
-                    .then((response) => {
-                        const token = response.data.token;
-                        if (typeof window !== 'undefined') sessionStorage.setItem('token', token);
-                        
-                        redirect(`/servers/1`);
-                    })
-                    .catch(error => {
-                        
-                        console.error('Login failed:', error);
-                    });
-                console.log(session.user);
-                await signOut();
-            }
-        };
-        fetchData();
-    }, []);
 
     return (
         <div >

@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 
+
 export default function AuthLayout({
     children,
 }: {
@@ -8,6 +9,7 @@ export default function AuthLayout({
     return (
         <main className=''>
             {children}
+           
         </main>
     )
 }

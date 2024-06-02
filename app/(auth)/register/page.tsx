@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import {signUp} from '@/app/api/UserApi';
 import { useRouter } from 'next/navigation';
+import { AxiosError } from 'axios';
 
 const Register = () => {
     const [username, setUsername] = useState("");
@@ -38,8 +39,11 @@ const Register = () => {
             router.push('/info');
             // Xử lý thành công
         } catch (error) {
-            console.error("Đăng ký không thành công:", error);
-            setErrorMessage("Đăng ký không thành công. Vui lòng thử lại sau.");
+            //@ts-ignore
+            if(error.response.status === 400){
+                setErrorMessage("Email đã tồn tại. Vui lòng chọn email khác.");
+            }
+            else setErrorMessage("Đăng ký không thành công. Vui lòng thử lại sau.");
         }
     };
 

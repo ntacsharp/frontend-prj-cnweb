@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react';
 
 const Info = () => {
 
-    const baseUrl = process.env.BASE_URL || 'http://localhost:4869';
+    const baseUrl = process.env.BASE_URL || 'http://localhost';
    
 
     useEffect(() => {
@@ -16,7 +16,7 @@ const Info = () => {
             const params = new URLSearchParams(window.location.search);
             const userId = params.get('userId');
 
-            axios.get(`${baseUrl}/api/user/verify/${userId}`)
+            axios.get(`${baseUrl}:4869/api/user/verify/${userId}`)
             .catch(err => {
                 console.log(err);
             })

@@ -119,7 +119,7 @@ export const CreateServerModal = () =>{
                     
                         </div>
                         <DialogFooter className = "bg-gray-100 px-6 py-4" >
-                        <Button disabled={isLoading} className="bg-blue-600 text-white hover:bg-indigo-500/90">
+                        <Button disabled={isLoading} className="bg-indigo-600 text-white hover:bg-indigo-500/90">
                             Tạo mới
                         </Button>
                     </DialogFooter>

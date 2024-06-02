@@ -54,7 +54,7 @@ const ChannelIdPage = () => {
 
         return (
             <div className="bg-white dark:bg-[#313338] flex flex-col h-screen">
-                <ChatHeader serverId={serverId} type="channel" name={channelName} />
+                <ChatHeader serverId={serverId || ""} type="channel" name={channelName} />
                 {/* <div className="flex-1"></div> */}
                 {channel.type === ChannelType.TEXT && (
                     <>
