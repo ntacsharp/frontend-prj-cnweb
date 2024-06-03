@@ -29,11 +29,11 @@ export const SocketProvider = ({children} : {children : React.ReactNode}) => {
     const [socket, setSocket] = useState<any>(null);
     const [isConnected, setIsConnected] = useState<boolean>(false);
 
-    const baseUrl = process.env.BASE_URL || "http://localhost:4869";
+    const baseUrl = process.env.BASE_URL || "http://localhost";
 
     useEffect(() => {
         const socketInstance = new (ClientIO as any)(
-            baseUrl,{
+            baseUrl + ':4869',{
                addTraillingSlash: false,
             }
         );

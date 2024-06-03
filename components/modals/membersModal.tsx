@@ -38,7 +38,7 @@ export const MembersModal = () => {
             var response = await changeMemberRole(role, {memberId, serverId}, token);
 
             router.refresh();
-            onOpen("members", { server: response.data })
+            onOpen("members", { server: response.data, id:"" })
         }
         catch (error) {
             console.log(error);
@@ -55,7 +55,7 @@ export const MembersModal = () => {
             if(!token) redirect("/login");
             var response = await deleteMember({memberId, serverId}, token);
             router.refresh();
-            onOpen("members", { server: response.data })
+            onOpen("members", { server: response.data , id: ""})
         }
         catch(error){
             console.log(error);

@@ -4,7 +4,7 @@ import { ChannelType } from "@/model/ChannelType";
 import { Server } from "@/model/Server";
 import { create } from "zustand";
 
-export type ModalType = "createServer" | "invite" | "editServer" | "members" | "createChannel" | "leaveServer" | "deleteServer" | "deleteChannel" | "editChannel" | "messageFile" | "deleteMessage" | "editProfile" | "changePassword";
+export type ModalType = "createServer" | "invite" | "editServer" | "members" | "createChannel" | "leaveServer" | "deleteServer" | "deleteChannel" | "editChannel" | "messageFile" | "deleteMessage" | "editProfile" | "changePassword" | "createUser" | "updateUser" | "deleteUser";
 
 
 // Data nhan vao cua modal
@@ -14,6 +14,7 @@ interface ModalData {
   channelType?: ChannelType;
   apiUrl?: string;
   query?: Record<string, any>;
+  id? : string;
 }
 
 
@@ -27,8 +28,12 @@ interface ModalStore {
 
 export const useModal = create<ModalStore>((set) => ({
   type: null,
-  data: {},
+  data: {
+    id: ""
+  },
   isOpen: false,
-  onOpen: (type, data = {}) => set({ isOpen: true, type, data }),
+  onOpen: (type, data = {
+    id: ""
+  }) => set({ isOpen: true, type, data }),
   onClose: () => set({ type: null, isOpen: false })
 }));

@@ -43,7 +43,7 @@ export const InviteModal = () => {
             setIsLoading(true);
             //const resp = await axios.patch(`/api/servers/${server?.id}/invite-code`);
             const resp = await generateNewLink(server?.id, window.sessionStorage.getItem('token'));
-            onOpen("invite", { server: resp.data });
+            onOpen("invite", { server: resp.data, id: "" }); // Add the 'id' property with an empty string value
         } catch (error) {
             console.log(error);
         } finally {

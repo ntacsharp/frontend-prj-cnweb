@@ -14,6 +14,9 @@ import { MessageFileModal } from "../modals/messageFileModal";
 import { DeleteMessageModal } from "../modals/deleteMessageModal";
 import { EditProfileModal } from "../modals/editProfileModal";
 import { ChangePasswordModal } from "../modals/editPasswordModal";
+import { CreateUserModal } from "../modals/createUserModal";
+import { UpdateUserModal } from "../modals/updateUserModal";
+import { DeleteUserModal } from "../modals/deleteUserModal";
 
 export const ModalProvider = () =>{
     const [isMounted, setIsMounted] = useState(false);
@@ -40,6 +43,9 @@ export const ModalProvider = () =>{
             <DeleteMessageModal/>
             <EditProfileModal/>
             <ChangePasswordModal/>
+            <CreateUserModal />
+            <UpdateUserModal />
+            <DeleteUserModal />
         </div>
     )
 }

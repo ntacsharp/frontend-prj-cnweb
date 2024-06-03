@@ -221,7 +221,8 @@ export const ChatItem = ({
             <Trash
               onClick={() => onOpen("deleteMessage", {
                 apiUrl: `${socketUrl}/${id}`,
-                query: socketQuery
+                query: socketQuery,
+                id: id // Add the missing id property
               })}
               className='cursor-pointer ml-auto w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition'
             />

@@ -54,11 +54,11 @@ export const ServerChannel = ({ channel, server, role }: svChannelProps) => {
                 <div className="ml-auto flex items-center gap-x-2">
                     <MyTooltip label="Edit" side="top">
                         <Edit className="hidden group-hover:block w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:text-zinc-400"
-                            onClick={(e:React.MouseEvent) => {e.stopPropagation();onOpen("editChannel",{server,channel})}}/>
+                            onClick={(e:React.MouseEvent) => {e.stopPropagation();onOpen("editChannel",{server,channel, id: channel.id})}}/>
                     </MyTooltip>
                     <MyTooltip label="Delete" side="top">
                         <Trash className="hidden group-hover:block w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:text-zinc-400"
-                            onClick={(e:React.MouseEvent) => {e.stopPropagation();onOpen("deleteChannel",{server,channel})}}/>
+                            onClick={(e:React.MouseEvent) => {e.stopPropagation();onOpen("deleteChannel",{server,channel, id: channel.id})}}/>
                     </MyTooltip>
                 </div>
             )}

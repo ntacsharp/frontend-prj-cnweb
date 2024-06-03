@@ -9,7 +9,9 @@ apiClient.interceptors.response.use(
          if(error.response.data.message === "Only user can access"){
             window.location.href = '/login';
          }
-         
+         if(error.response.data.message === "Only admin can access"){
+            window.location.href = '/error/admin';
+         }
       }
       return Promise.reject(error);
     }
@@ -58,4 +60,60 @@ export const changePassword = async(values,token) => {
         Authorization: `Bearer ${token}`,
     };
     return apiClient.put(`/api/user/change-password`, payload,{headers:headers});
+}
+
+export const adminGetAll = async(token) => {
+    const headers = {
+        Authorization: `Bearer ${token}`,
+    };
+    return apiClient.get(`/api/admin/all`,{headers:headers});
+}
+
+
+export const createUser = (username, email, password, displayname, token) => {
+    const headers = {
+        Authorization: `Bearer ${token}`,
+    };
+
+    const payload = {
+        username: username,
+        email: email,
+        password: password,
+        displayName: displayname
+    };
+
+    return apiClient.post(`/api/admin/create`, payload, {headers : headers});
+};
+
+
+export const updateUser = (id,username, password, displayname, token) => {
+    const headers = {
+        Authorization: `Bearer ${token}`,
+    };
+
+    const payload = {
+        username: username,
+        password: password,
+        displayName: displayname
+    };
+
+    return apiClient.put(`/api/admin/update/${id}`, payload, {headers : headers});
+};
+
+export const deleteUser = (id, token) => {
+    const headers = {
+        Authorization: `Bearer ${token}`,
+    };
+
+    return apiClient.delete(`/api/admin/delete/${id}`, {headers : headers});
+}
+
+
+export const searchUser = (query, token) => {
+    const headers = {
+        Authorization: `Bearer ${token}`,
+    };
+
+    return apiClient.get(`/api/admin/search?query=${query}`, {headers : headers});
+
 }
