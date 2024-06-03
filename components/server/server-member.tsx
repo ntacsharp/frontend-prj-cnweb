@@ -25,7 +25,7 @@ export const ServerMember = ({member,server}:svMemberProps) =>{
     const router = useRouter();
 
     const handleSelectMember = ()=>{
-        router.push(`/servers/${params?.serverId}/conservations/${member.id}`)
+        router.push(`/servers/${params?.serverId}/conversations/${member.id}`)
     }
 
     const iconRole = roleIconMap[member.role]
