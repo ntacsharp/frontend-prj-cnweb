@@ -35,7 +35,7 @@ export const DeleteServerModal = () => {
         await deleteServer(server?.id,token);
         onClose();
         router.refresh();
-        router.push("/servers/1");
+        window.location.href = "/servers/1";
     }
     catch (error) {
         console.log(error);

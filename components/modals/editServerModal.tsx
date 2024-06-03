@@ -59,8 +59,9 @@ export const EditServerModal = () => {
             const response = await updateServer(values, server?.id, token)
             const id = response.data.id;
             form.reset();
+            onClose();
             router.refresh();
-            router.push(`/servers/${id}`);
+            window.location.href = `/servers/${id}`;
         }
         catch (error) {
             console.log(error);
