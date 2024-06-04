@@ -41,6 +41,7 @@ const ChannelIdPage = () => {
                 setMember(memberData);
 
             } catch (error) {
+                window.location.href = "/servers/1";
                 console.error("Error fetching channel:", error);
             }
         };

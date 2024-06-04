@@ -27,6 +27,7 @@ const ServerIdPage = () => {
         setGeneralChannelId(serverData.data.channels[0].id);
       
       } catch (error) {
+        window.location.href = "/servers/1";
         console.error("Error fetching server data:", error);
       }
     };
