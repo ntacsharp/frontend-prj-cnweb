@@ -43,9 +43,13 @@ export const UserAvatar = ({ profileId }: { profileId: string }) => {
                             setImageSrc(res.data.imageUrl)
 
                         }
+                        try{
                         if (res.status == 200 && res.data.name == "") {
                             const res2 = createProfile(res.data.user.displayName, token);
                             fetchData();
+                        }}
+                        catch(err){
+                            window.location.href = "/error/user"
                         }
                     })
             }

@@ -59,6 +59,7 @@ export const EditProfileModal = () => {
             form.reset();
             router.refresh();
             onClose();
+            window.location.reload();
         } catch (error) {
             console.log(error);
         }

@@ -86,15 +86,15 @@ export const createUser = (username, email, password, displayname, token) => {
 };
 
 
-export const updateUser = (id,username, password, displayname, token) => {
+export const updateUser = (id,username,status ,displayname, token) => {
     const headers = {
         Authorization: `Bearer ${token}`,
     };
 
     const payload = {
         username: username,
-        password: password,
-        displayName: displayname
+        displayName: displayname,
+        status : status
     };
 
     return apiClient.put(`/api/admin/update/${id}`, payload, {headers : headers});

@@ -47,6 +47,7 @@ export const CreateServerModal = () =>{
             if(!token) redirect("/login");
             const response = await createServer(values, token)
             const id = response.data.id;
+            onClose();
             form.reset();
             window.location.reload();
             router.push(`/servers/${id}`);

@@ -15,6 +15,9 @@ interface ModalData {
   apiUrl?: string;
   query?: Record<string, any>;
   id? : string;
+  username? : string;
+  displayname? : string;
+  status? : string
 }
 
 

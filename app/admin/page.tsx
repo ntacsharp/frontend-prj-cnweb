@@ -130,7 +130,7 @@ const Admin = () => {
                   {format(new Date(user.UpdatedAt), DATE_FORMAT)}
                 </td>
                 <td className="px-6 py-4 space-x-3">
-                <button onClick={() => onOpen("updateUser",{id : user.Id})} className="bg-violet-300 shadow-md hover:bg-violet-400 w-11 p-1 h-[2rem] duration-150 rounded-md font-bold text-white">Sửa</button>
+                <button onClick={() => onOpen("updateUser",{id : user.Id, username : user.Username, displayname : user.Displayname})} className="bg-violet-300 shadow-md hover:bg-violet-400 w-11 p-1 h-[2rem] duration-150 rounded-md font-bold text-white">Sửa</button>
 
                 <button onClick={() => onOpen("deleteUser",{id : user.Id})} className="bg-red-400 shadow-md hover:bg-red-500 w-11 p-1 h-[2rem] duration-150 rounded-md font-bold text-white">Xóa</button>
  

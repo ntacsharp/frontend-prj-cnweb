@@ -35,7 +35,7 @@ export const LeaveServerModal = () => {
         await leaveServer(server?.id,token);
         onClose();
         router.refresh();
-        router.push("/");
+        window.location.href = "/servers/1"
     }
     catch (error) {
         console.log(error);

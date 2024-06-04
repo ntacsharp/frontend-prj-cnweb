@@ -19,22 +19,26 @@ import { useRouter } from "next/navigation";
 import { useModal } from "@/hook/use-modal";
 import { usePathname } from 'next/navigation';
 import { updateUser } from "@/app/api/UserApi";
+import { useEffect } from "react";
+import { Select } from "@radix-ui/react-select";
+import { SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 
 
-const allowedTypes = ["TEXT", "AUDIO", "VIDEO"];
+const allowedTypes = ["active", "inactive"];
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const formSchema = z.object({
 
-    password: z.string().min(8, {
-        message: "Mật khẩu lớn hơn 8 ký tự"
-    }),
     username: z.string().min(1, {
         message: "username là bắt buộc."
     }),
     displayname: z.string().min(1, {
         message: "username là bắt buộc."
-    })
+    }),
+    type: z.string().refine(
+        type => allowedTypes.includes(type)
+    )
+    
 });
 
 export const UpdateUserModal = () => {
@@ -44,16 +48,28 @@ export const UpdateUserModal = () => {
 
     const { isOpen, onClose, type, data } = useModal();
     const userId = data.id;
+    const username : string = data.username as string;
+    const displayname = data.displayname as string;
+    const status = data.status as string;
     
     const isModalOpen = isOpen && type === "updateUser";
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            password: "",
-            username: "",
-            displayname: ""
+          
+            username: username,
+            displayname: displayname,
+            type : status
         }
     })
+
+    form.setValue("username", username);
+    form.setValue("displayname", displayname);
+
+    
+    
+
+    
 
     const serverId = pathname?.split("/")[2];
 
@@ -66,7 +82,7 @@ export const UpdateUserModal = () => {
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
             console.log(values);
-            const response = await updateUser(userId,values.username, values.password, values.displayname, window.sessionStorage.getItem("token"));
+            const response = await updateUser(userId,values.username,values.type ,values.displayname, window.sessionStorage.getItem("token"));
            
             form.reset();
             onClose();
@@ -90,29 +106,7 @@ export const UpdateUserModal = () => {
                         className="space-y-8">
                         <div className="space-y-8 px-6">
 
-                            <FormField
-                                control={form.control}
-                                name="password"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel
-                                            className="text-xs text-zinc-500 font-bold uppercase">
-                                            Mật khẩu
-                                        </FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                type="password"
-                                                disabled={isLoading}
-                                                className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
-                                                placeholder="Nhập mật khẩu"
-                                                {...field}
-                                            />
-
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
+                            
                             <FormField
                                 control={form.control}
                                 name="username"
@@ -127,7 +121,8 @@ export const UpdateUserModal = () => {
                                                 disabled={isLoading}
                                                 className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
                                                 placeholder="Nhập username"
-                                                {...field}
+                                                value={field.value}
+                                                onChange={field.onChange}
                                             />
 
                                         </FormControl>
@@ -153,6 +148,39 @@ export const UpdateUserModal = () => {
                                             />
 
                                         </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="type"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Status</FormLabel>
+                                        <Select
+                                            disabled={isLoading}
+                                            onValueChange={field.onChange}
+                                            defaultValue={field.value}
+                                        >
+                                            <FormControl>
+                                                <SelectTrigger className="bg-zinc-300/50 border-0 focus:ring-0 text-black
+                                                ring-offset-0 focus:ring-offset-0 capitalize outline-none">
+
+                                                    <SelectValue placeholder="Chọn status"></SelectValue>
+
+                                                </SelectTrigger>
+                                            </FormControl>
+                                            <SelectContent>
+                                                {allowedTypes.map((type) => {
+                                                    return (
+                                                        <SelectItem key={type} value={type}>
+                                                            {type.toLowerCase()}
+                                                        </SelectItem>
+                                                    )
+                                                })}
+                                            </SelectContent>
+                                        </Select>
                                         <FormMessage />
                                     </FormItem>
                                 )}
