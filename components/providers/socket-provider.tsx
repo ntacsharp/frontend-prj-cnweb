@@ -33,7 +33,7 @@ export const SocketProvider = ({children} : {children : React.ReactNode}) => {
 
     useEffect(() => {
         const socketInstance = new (ClientIO as any)(
-            baseUrl + ':4869',{
+            `${baseUrl}:4869`,{
                addTraillingSlash: false,
             }
         );
