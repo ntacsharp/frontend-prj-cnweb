@@ -35,6 +35,7 @@ const ChannelIdPage = () => {
                 const channelData = await getChannelById(params?.channelId, sessionStorage.getItem('token'));
                 setChannelName(channelData.data.name);
                 setChannel(channelData.data);
+                console.log(channelData);
 
 
                 const memberData = await getCurrentMember(serverId, sessionStorage.getItem('token'));
